@@ -1,0 +1,30 @@
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+
+version: '0.2'
+
+import:
+  - "@cspell/dict-ru_ru/cspell-ext.json"
+
+language: en,ru
+allowCompoundWords: true
+
+ignorePaths:
+  - node_modules
+  - .yarn
+  - biome.json
+  - package.json
+  - cspell.yml
+  - .yarnrc.yml
+
+  ## keystone codegen
+  - ./services/cms/schema.{graphql,prisma}
+  - ./services/cms/keystone.db
+  - ./services/cms/.keystone
+
+  ## client codegen
+  - '**/_generated_/**'
+
+words:
+  - vercel
+  - Arimo
+  - shuimi

@@ -1,0 +1,4 @@
+'**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,yml,yaml}':
+  - biome check
+'**/*':
+  - cspell --words-only -u --no-progress --no-must-find-files
