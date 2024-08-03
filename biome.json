@@ -11,6 +11,7 @@
             "**/node_modules/*",
             "**/_generated_/*",
             "**/.keystone/*"
+            
         ]
     },
     "linter": {
