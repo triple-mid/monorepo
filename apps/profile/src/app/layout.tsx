@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
+
 import { ColorSchemeScript } from '@mantine/core';
 
 import { RootProvider } from '~/app/provider';

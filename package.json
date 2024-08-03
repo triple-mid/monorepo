@@ -1,7 +1,10 @@
 {
     "name": "@triplemid/monorepo",
     "private": true,
-    "workspaces": ["./apps/*", "./services/*"],
+    "workspaces": [
+        "./apps/*",
+        "./services/*"
+    ],
     "scripts": {
         "dev:hr-dashboard": "yarn workspace @triplemid/hr-dashboard dev",
         "dev:profile": "yarn workspace @triplemid/profile dev",
