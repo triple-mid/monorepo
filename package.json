@@ -9,6 +9,7 @@
         "dev:hr-dashboard": "yarn workspace @triplemid/hr-dashboard dev",
         "dev:profile": "yarn workspace @triplemid/profile dev",
         "dev:cms": "yarn workspace @triplemid/cms dev",
+        "dev:cms:seed": "yarn workspace @triplemid/cms seed",
         "postinstall": "husky",
         "lint": "biome lint --write",
         "format": "biome format --write",

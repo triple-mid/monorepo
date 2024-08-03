@@ -6,11 +6,16 @@
         "dev": "keystone dev",
         "start": "keystone start",
         "build": "keystone build",
-        "postinstall": "keystone build --no-ui --frozen"
+        "postinstall": "keystone build --no-ui --frozen",
+        "seed": "tsx pre-seeding.ts && SEEDING=true keystone dev || tsx data-seeding.ts"
     },
     "dependencies": {
         "@keystone-6/auth": "^7.0.0",
         "@keystone-6/core": "^5.0.0",
         "@keystone-6/fields-document": "^7.0.0"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11",
+        "tsx": "^4.16.5"
     }
 }

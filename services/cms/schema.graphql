@@ -235,6 +235,7 @@ type UserProfile {
   firstName: String
   lastName: String
   middleName: String
+  bio: String
   birth: CalendarDay
   photo: ImageFieldOutput
   starsCount: Int
@@ -276,6 +277,7 @@ input UserProfileWhereInput {
   firstName: StringFilter
   lastName: StringFilter
   middleName: StringFilter
+  bio: StringFilter
   birth: CalendarDayNullableFilter
   starsCount: IntNullableFilter
   reviewsCount: IntNullableFilter
@@ -318,6 +320,7 @@ input UserProfileOrderByInput {
   firstName: OrderDirection
   lastName: OrderDirection
   middleName: OrderDirection
+  bio: OrderDirection
   birth: OrderDirection
   starsCount: OrderDirection
   reviewsCount: OrderDirection
@@ -329,6 +332,7 @@ input UserProfileUpdateInput {
   firstName: String
   lastName: String
   middleName: String
+  bio: String
   birth: CalendarDay
   photo: ImageFieldInput
   starsCount: Int
@@ -368,6 +372,7 @@ input UserProfileCreateInput {
   firstName: String
   lastName: String
   middleName: String
+  bio: String
   birth: CalendarDay
   photo: ImageFieldInput
   starsCount: Int
