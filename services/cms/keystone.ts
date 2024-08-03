@@ -20,7 +20,7 @@ export default withAuth(
         session,
         ui: {
             isAccessAllowed: (context) => {
-                return context.session?.data.role === 'admin' ?? false;
+                return context.session?.data.role === 'admin';
             },
         },
         storage: {

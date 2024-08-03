@@ -67,28 +67,62 @@ model Document {
   @@index([ownerId])
 }
 
+model Organization {
+  id           String       @id @default(cuid())
+  title        String       @default("")
+  description  String       @default("")
+  address      String       @default("")
+  inn          String       @default("")
+  ogrn         String       @default("")
+  jobVacancies JobVacancy[] @relation("JobVacancy_organisation")
+  createdAt    DateTime?    @default(now())
+}
+
+model JobVacancy {
+  id                    String        @id @default(cuid())
+  title                 String        @default("")
+  priceFrom             String        @default("")
+  priceTo               String        @default("")
+  priceExact            String        @default("")
+  place                 String        @default("")
+  dateFrom              String?
+  dateTo                String?
+  requireSelfEmployment Boolean       @default(false)
+  summary               String        @default("")
+  content               String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  organisation          Organization? @relation("JobVacancy_organisation", fields: [organisationId], references: [id])
+  organisationId        String?       @map("organisation")
+  skills                Skill[]       @relation("JobVacancy_skills")
+  createdAt             DateTime?     @default(now())
+
+  @@index([organisationId])
+}
+
 model CV {
-  id        String    @id @default(cuid())
-  user      User?     @relation("CV_user", fields: [userId], references: [id])
-  userId    String?   @map("user")
-  title     String    @default("")
-  salary    String    @default("")
-  place     String    @default("")
-  dateFrom  String?
-  dateTo    String?
-  summary   String    @default("")
-  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  skills    Skill[]   @relation("CV_skills")
-  createdAt DateTime? @default(now())
+  id         String    @id @default(cuid())
+  user       User?     @relation("CV_user", fields: [userId], references: [id])
+  userId     String?   @map("user")
+  title      String    @default("")
+  priceFrom  String    @default("")
+  priceTo    String    @default("")
+  priceExact String    @default("")
+  place      String    @default("")
+  dateFrom   String?
+  dateTo     String?
+  summary    String    @default("")
+  content    String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  skills     Skill[]   @relation("CV_skills")
+  createdAt  DateTime? @default(now())
 
   @@index([userId])
 }
 
 model Skill {
-  id          String @id @default(cuid())
-  title       String @default("")
-  description String @default("")
-  cvs         CV[]   @relation("CV_skills")
+  id           String       @id @default(cuid())
+  title        String       @default("")
+  description  String       @default("")
+  cvs          CV[]         @relation("CV_skills")
+  jobVacancies JobVacancy[] @relation("JobVacancy_skills")
 }
 
 model Post {
@@ -111,13 +145,18 @@ model Tag {
 }
 
 model Story {
-  id          String    @id @default(cuid())
-  author      User?     @relation("Story_author", fields: [authorId], references: [id])
-  authorId    String?   @map("author")
-  mediaUrl    String    @default("")
-  title       String    @default("")
-  description String    @default("")
-  createdAt   DateTime? @default(now())
+  id                 String    @id @default(cuid())
+  author             User?     @relation("Story_author", fields: [authorId], references: [id])
+  authorId           String?   @map("author")
+  thumbUrl_id        String?
+  thumbUrl_filesize  Int?
+  thumbUrl_width     Int?
+  thumbUrl_height    Int?
+  thumbUrl_extension String?
+  mediaUrl           String    @default("")
+  title              String    @default("")
+  description        String    @default("")
+  createdAt          DateTime? @default(now())
 
   @@index([authorId])
 }

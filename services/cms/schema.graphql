@@ -479,11 +479,226 @@ input DocumentCreateInput {
   owner: UserRelateToOneForCreateInput
 }
 
+type Organization {
+  id: ID!
+  title: String
+  description: String
+  address: String
+  inn: String
+  ogrn: String
+  jobVacancies(where: JobVacancyWhereInput! = {}, orderBy: [JobVacancyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JobVacancyWhereUniqueInput): [JobVacancy!]
+  jobVacanciesCount(where: JobVacancyWhereInput! = {}): Int
+  createdAt: DateTime
+}
+
+input OrganizationWhereUniqueInput {
+  id: ID
+}
+
+input OrganizationWhereInput {
+  AND: [OrganizationWhereInput!]
+  OR: [OrganizationWhereInput!]
+  NOT: [OrganizationWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  address: StringFilter
+  inn: StringFilter
+  ogrn: StringFilter
+  jobVacancies: JobVacancyManyRelationFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input JobVacancyManyRelationFilter {
+  every: JobVacancyWhereInput
+  some: JobVacancyWhereInput
+  none: JobVacancyWhereInput
+}
+
+input OrganizationOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  address: OrderDirection
+  inn: OrderDirection
+  ogrn: OrderDirection
+  createdAt: OrderDirection
+}
+
+input OrganizationUpdateInput {
+  title: String
+  description: String
+  address: String
+  inn: String
+  ogrn: String
+  jobVacancies: JobVacancyRelateToManyForUpdateInput
+  createdAt: DateTime
+}
+
+input JobVacancyRelateToManyForUpdateInput {
+  disconnect: [JobVacancyWhereUniqueInput!]
+  set: [JobVacancyWhereUniqueInput!]
+  create: [JobVacancyCreateInput!]
+  connect: [JobVacancyWhereUniqueInput!]
+}
+
+input OrganizationUpdateArgs {
+  where: OrganizationWhereUniqueInput!
+  data: OrganizationUpdateInput!
+}
+
+input OrganizationCreateInput {
+  title: String
+  description: String
+  address: String
+  inn: String
+  ogrn: String
+  jobVacancies: JobVacancyRelateToManyForCreateInput
+  createdAt: DateTime
+}
+
+input JobVacancyRelateToManyForCreateInput {
+  create: [JobVacancyCreateInput!]
+  connect: [JobVacancyWhereUniqueInput!]
+}
+
+type JobVacancy {
+  id: ID!
+  title: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
+  requireSelfEmployment: Boolean
+  summary: String
+  content: JobVacancy_content_Document
+  organisation: Organization
+  skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
+  skillsCount(where: SkillWhereInput! = {}): Int
+  createdAt: DateTime
+}
+
+type JobVacancy_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input JobVacancyWhereUniqueInput {
+  id: ID
+}
+
+input JobVacancyWhereInput {
+  AND: [JobVacancyWhereInput!]
+  OR: [JobVacancyWhereInput!]
+  NOT: [JobVacancyWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  priceFrom: StringFilter
+  priceTo: StringFilter
+  priceExact: StringFilter
+  place: StringFilter
+  dateFrom: CalendarDayNullableFilter
+  dateTo: CalendarDayNullableFilter
+  requireSelfEmployment: BooleanFilter
+  summary: StringFilter
+  organisation: OrganizationWhereInput
+  skills: SkillManyRelationFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input SkillManyRelationFilter {
+  every: SkillWhereInput
+  some: SkillWhereInput
+  none: SkillWhereInput
+}
+
+input JobVacancyOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  priceFrom: OrderDirection
+  priceTo: OrderDirection
+  priceExact: OrderDirection
+  place: OrderDirection
+  dateFrom: OrderDirection
+  dateTo: OrderDirection
+  requireSelfEmployment: OrderDirection
+  summary: OrderDirection
+  createdAt: OrderDirection
+}
+
+input JobVacancyUpdateInput {
+  title: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
+  requireSelfEmployment: Boolean
+  summary: String
+  content: JSON
+  organisation: OrganizationRelateToOneForUpdateInput
+  skills: SkillRelateToManyForUpdateInput
+  createdAt: DateTime
+}
+
+input OrganizationRelateToOneForUpdateInput {
+  create: OrganizationCreateInput
+  connect: OrganizationWhereUniqueInput
+  disconnect: Boolean
+}
+
+input SkillRelateToManyForUpdateInput {
+  disconnect: [SkillWhereUniqueInput!]
+  set: [SkillWhereUniqueInput!]
+  create: [SkillCreateInput!]
+  connect: [SkillWhereUniqueInput!]
+}
+
+input JobVacancyUpdateArgs {
+  where: JobVacancyWhereUniqueInput!
+  data: JobVacancyUpdateInput!
+}
+
+input JobVacancyCreateInput {
+  title: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
+  requireSelfEmployment: Boolean
+  summary: String
+  content: JSON
+  organisation: OrganizationRelateToOneForCreateInput
+  skills: SkillRelateToManyForCreateInput
+  createdAt: DateTime
+}
+
+input OrganizationRelateToOneForCreateInput {
+  create: OrganizationCreateInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input SkillRelateToManyForCreateInput {
+  create: [SkillCreateInput!]
+  connect: [SkillWhereUniqueInput!]
+}
+
 type CV {
   id: ID!
   user: User
   title: String
-  salary: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -509,7 +724,9 @@ input CVWhereInput {
   id: IDFilter
   user: UserWhereInput
   title: StringFilter
-  salary: StringFilter
+  priceFrom: StringFilter
+  priceTo: StringFilter
+  priceExact: StringFilter
   place: StringFilter
   dateFrom: CalendarDayNullableFilter
   dateTo: CalendarDayNullableFilter
@@ -518,16 +735,12 @@ input CVWhereInput {
   createdAt: DateTimeNullableFilter
 }
 
-input SkillManyRelationFilter {
-  every: SkillWhereInput
-  some: SkillWhereInput
-  none: SkillWhereInput
-}
-
 input CVOrderByInput {
   id: OrderDirection
   title: OrderDirection
-  salary: OrderDirection
+  priceFrom: OrderDirection
+  priceTo: OrderDirection
+  priceExact: OrderDirection
   place: OrderDirection
   dateFrom: OrderDirection
   dateTo: OrderDirection
@@ -538,7 +751,9 @@ input CVOrderByInput {
 input CVUpdateInput {
   user: UserRelateToOneForUpdateInput
   title: String
-  salary: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -546,13 +761,6 @@ input CVUpdateInput {
   content: JSON
   skills: SkillRelateToManyForUpdateInput
   createdAt: DateTime
-}
-
-input SkillRelateToManyForUpdateInput {
-  disconnect: [SkillWhereUniqueInput!]
-  set: [SkillWhereUniqueInput!]
-  create: [SkillCreateInput!]
-  connect: [SkillWhereUniqueInput!]
 }
 
 input CVUpdateArgs {
@@ -563,7 +771,9 @@ input CVUpdateArgs {
 input CVCreateInput {
   user: UserRelateToOneForCreateInput
   title: String
-  salary: String
+  priceFrom: String
+  priceTo: String
+  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -573,17 +783,14 @@ input CVCreateInput {
   createdAt: DateTime
 }
 
-input SkillRelateToManyForCreateInput {
-  create: [SkillCreateInput!]
-  connect: [SkillWhereUniqueInput!]
-}
-
 type Skill {
   id: ID!
   title: String
   description: String
   cvs(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
   cvsCount(where: CVWhereInput! = {}): Int
+  jobVacancies(where: JobVacancyWhereInput! = {}, orderBy: [JobVacancyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JobVacancyWhereUniqueInput): [JobVacancy!]
+  jobVacanciesCount(where: JobVacancyWhereInput! = {}): Int
 }
 
 input SkillWhereUniqueInput {
@@ -598,6 +805,7 @@ input SkillWhereInput {
   title: StringFilter
   description: StringFilter
   cvs: CVManyRelationFilter
+  jobVacancies: JobVacancyManyRelationFilter
 }
 
 input SkillOrderByInput {
@@ -610,6 +818,7 @@ input SkillUpdateInput {
   title: String
   description: String
   cvs: CVRelateToManyForUpdateInput
+  jobVacancies: JobVacancyRelateToManyForUpdateInput
 }
 
 input SkillUpdateArgs {
@@ -621,6 +830,7 @@ input SkillCreateInput {
   title: String
   description: String
   cvs: CVRelateToManyForCreateInput
+  jobVacancies: JobVacancyRelateToManyForCreateInput
 }
 
 type Post {
@@ -745,6 +955,7 @@ input TagCreateInput {
 type Story {
   id: ID!
   author: User
+  thumbUrl: ImageFieldOutput
   mediaUrl: String
   title: String
   description: String
@@ -777,6 +988,7 @@ input StoryOrderByInput {
 
 input StoryUpdateInput {
   author: UserRelateToOneForUpdateInput
+  thumbUrl: ImageFieldInput
   mediaUrl: String
   title: String
   description: String
@@ -790,6 +1002,7 @@ input StoryUpdateArgs {
 
 input StoryCreateInput {
   author: UserRelateToOneForCreateInput
+  thumbUrl: ImageFieldInput
   mediaUrl: String
   title: String
   description: String
@@ -826,6 +1039,18 @@ type Mutation {
   updateDocuments(data: [DocumentUpdateArgs!]!): [Document]
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteDocuments(where: [DocumentWhereUniqueInput!]!): [Document]
+  createOrganization(data: OrganizationCreateInput!): Organization
+  createOrganizations(data: [OrganizationCreateInput!]!): [Organization]
+  updateOrganization(where: OrganizationWhereUniqueInput!, data: OrganizationUpdateInput!): Organization
+  updateOrganizations(data: [OrganizationUpdateArgs!]!): [Organization]
+  deleteOrganization(where: OrganizationWhereUniqueInput!): Organization
+  deleteOrganizations(where: [OrganizationWhereUniqueInput!]!): [Organization]
+  createJobVacancy(data: JobVacancyCreateInput!): JobVacancy
+  createJobVacancies(data: [JobVacancyCreateInput!]!): [JobVacancy]
+  updateJobVacancy(where: JobVacancyWhereUniqueInput!, data: JobVacancyUpdateInput!): JobVacancy
+  updateJobVacancies(data: [JobVacancyUpdateArgs!]!): [JobVacancy]
+  deleteJobVacancy(where: JobVacancyWhereUniqueInput!): JobVacancy
+  deleteJobVacancies(where: [JobVacancyWhereUniqueInput!]!): [JobVacancy]
   createCV(data: CVCreateInput!): CV
   createCVS(data: [CVCreateInput!]!): [CV]
   updateCV(where: CVWhereUniqueInput!, data: CVUpdateInput!): CV
@@ -891,6 +1116,12 @@ type Query {
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   document(where: DocumentWhereUniqueInput!): Document
   documentsCount(where: DocumentWhereInput! = {}): Int
+  organizations(where: OrganizationWhereInput! = {}, orderBy: [OrganizationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrganizationWhereUniqueInput): [Organization!]
+  organization(where: OrganizationWhereUniqueInput!): Organization
+  organizationsCount(where: OrganizationWhereInput! = {}): Int
+  jobVacancies(where: JobVacancyWhereInput! = {}, orderBy: [JobVacancyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JobVacancyWhereUniqueInput): [JobVacancy!]
+  jobVacancy(where: JobVacancyWhereUniqueInput!): JobVacancy
+  jobVacanciesCount(where: JobVacancyWhereInput! = {}): Int
   cVS(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
   cV(where: CVWhereUniqueInput!): CV
   cVSCount(where: CVWhereInput! = {}): Int

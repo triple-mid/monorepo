@@ -3,6 +3,7 @@ import { allowAll } from '@keystone-6/core/access';
 
 import {
     calendarDay,
+    checkbox,
     image,
     integer,
     json,
@@ -16,6 +17,15 @@ import {
 import { document } from '@keystone-6/fields-document';
 
 import type { Lists } from '.keystone/types';
+
+const skillsUi = {
+    displayMode: 'cards',
+    cardFields: ['title', 'description'],
+    inlineEdit: { fields: ['title', 'description'] },
+    linkToItem: true,
+    inlineConnect: true,
+    inlineCreate: { fields: ['title', 'description'] },
+} as const;
 
 export const lists: Lists = {
     User: list({
@@ -62,9 +72,7 @@ export const lists: Lists = {
             middleName: text(),
             birth: calendarDay(),
 
-            photoUrl: image({
-                storage: 'images',
-            }),
+            photo: image({ storage: 'images' }),
 
             /**
              * Количество добавлений профиля в избранное.
@@ -129,6 +137,88 @@ export const lists: Lists = {
         },
     }),
 
+    Organization: list({
+        access: allowAll,
+
+        fields: {
+            title: text(),
+            description: text(),
+
+            address: text(),
+
+            inn: text(),
+            ogrn: text(),
+
+            /**
+             * Количество добавлений организации в избранное.
+             *
+             * TODO: перерассчёт при работе с соответствующей моделью,
+             *  реализовать после добавления модели
+             * */
+            starsCount: integer(),
+            /**
+             * Количество отзывов.
+             *
+             * TODO: перерассчёт при работе с соответствующей моделью,
+             *  реализовать после добавления модели
+             * */
+            reviewsCount: integer(),
+
+            jobVacancies: relationship({
+                ref: 'JobVacancy.organisation',
+                many: true,
+            }),
+
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
+        },
+    }),
+
+    JobVacancy: list({
+        access: allowAll,
+
+        fields: {
+            title: text({ validation: { isRequired: true } }),
+            cover: image({ storage: 'images' }),
+
+            // TODO: switch to decimal while migrating to PostgreSQL
+            //  The decimal field does not support sqlite
+            priceFrom: text(),
+            priceTo: text(),
+
+            place: text(),
+
+            dateFrom: calendarDay(),
+            dateTo: calendarDay(),
+
+            requireSelfEmployment: checkbox(),
+
+            summary: text(),
+            content: document({
+                formatting: true,
+                layouts: [
+                    [1, 1],
+                    [1, 1, 1],
+                    [2, 1],
+                    [1, 2],
+                    [1, 2, 1],
+                ],
+                links: true,
+                dividers: true,
+            }),
+
+            organisation: relationship({
+                ref: 'Organization.jobVacancies',
+            }),
+            skills: relationship({
+                ref: 'Skill.jobVacancies',
+                many: true,
+                ui: skillsUi,
+            }),
+
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
+        },
+    }),
+
     CV: list({
         access: allowAll,
 
@@ -137,7 +227,11 @@ export const lists: Lists = {
 
             title: text({ validation: { isRequired: true } }),
 
-            salary: text(),
+            // TODO: switch to decimal while migrating to PostgreSQL
+            //  The decimal field does not support sqlite
+            priceFrom: text(),
+            priceTo: text(),
+
             place: text(),
             dateFrom: calendarDay(),
             dateTo: calendarDay(),
@@ -158,15 +252,7 @@ export const lists: Lists = {
             skills: relationship({
                 ref: 'Skill.cvs',
                 many: true,
-
-                ui: {
-                    displayMode: 'cards',
-                    cardFields: ['title', 'description'],
-                    inlineEdit: { fields: ['title', 'description'] },
-                    linkToItem: true,
-                    inlineConnect: true,
-                    inlineCreate: { fields: ['title', 'description'] },
-                },
+                ui: skillsUi,
             }),
 
             createdAt: timestamp({ defaultValue: { kind: 'now' } }),
@@ -178,7 +264,12 @@ export const lists: Lists = {
         fields: {
             title: text({ validation: { isRequired: true } }),
             description: text({ validation: { isRequired: true } }),
+
             cvs: relationship({ ref: 'CV.skills', many: true }),
+            jobVacancies: relationship({
+                ref: 'JobVacancy.skills',
+                many: true,
+            }),
         },
     }),
 
@@ -241,9 +332,7 @@ export const lists: Lists = {
         fields: {
             author: relationship({ ref: 'User.stories' }),
 
-            thumbUrl: image({
-                storage: 'images',
-            }),
+            thumb: image({ storage: 'images' }),
             mediaUrl: text(),
             title: text({ validation: { isRequired: true } }),
             description: text(),
