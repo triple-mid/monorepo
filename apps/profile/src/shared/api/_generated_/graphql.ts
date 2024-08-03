@@ -14,18 +14,95 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  CalendarDay: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: { input: any; output: any; }
+};
+
+export type Achievement = {
+  __typename?: 'Achievement';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  profile?: Maybe<UserProfile>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type AchievementCreateInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  profile?: InputMaybe<UserProfileRelateToOneForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AchievementManyRelationFilter = {
+  every?: InputMaybe<AchievementWhereInput>;
+  none?: InputMaybe<AchievementWhereInput>;
+  some?: InputMaybe<AchievementWhereInput>;
+};
+
+export type AchievementOrderByInput = {
+  description?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+};
+
+export type AchievementRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<AchievementWhereUniqueInput>>;
+  create?: InputMaybe<Array<AchievementCreateInput>>;
+};
+
+export type AchievementRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<AchievementWhereUniqueInput>>;
+  create?: InputMaybe<Array<AchievementCreateInput>>;
+  disconnect?: InputMaybe<Array<AchievementWhereUniqueInput>>;
+  set?: InputMaybe<Array<AchievementWhereUniqueInput>>;
+};
+
+export type AchievementUpdateArgs = {
+  data: AchievementUpdateInput;
+  where: AchievementWhereUniqueInput;
+};
+
+export type AchievementUpdateInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  profile?: InputMaybe<UserProfileRelateToOneForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AchievementWhereInput = {
+  AND?: InputMaybe<Array<AchievementWhereInput>>;
+  NOT?: InputMaybe<Array<AchievementWhereInput>>;
+  OR?: InputMaybe<Array<AchievementWhereInput>>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  profile?: InputMaybe<UserProfileWhereInput>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type AchievementWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type AuthenticatedItem = User;
+
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<BooleanFilter>;
+};
 
 export type Cv = {
   __typename?: 'CV';
   content?: Maybe<Cv_Content_Document>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  dateFrom?: Maybe<Scalars['CalendarDay']['output']>;
+  dateTo?: Maybe<Scalars['CalendarDay']['output']>;
   id: Scalars['ID']['output'];
+  place?: Maybe<Scalars['String']['output']>;
+  priceExact?: Maybe<Scalars['String']['output']>;
+  priceFrom?: Maybe<Scalars['String']['output']>;
+  priceTo?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Skill>>;
   skillsCount?: Maybe<Scalars['Int']['output']>;
   summary?: Maybe<Scalars['String']['output']>;
@@ -50,6 +127,12 @@ export type CvSkillsCountArgs = {
 export type CvCreateInput = {
   content?: InputMaybe<Scalars['JSON']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
+  dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  priceExact?: InputMaybe<Scalars['String']['input']>;
+  priceFrom?: InputMaybe<Scalars['String']['input']>;
+  priceTo?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<SkillRelateToManyForCreateInput>;
   summary?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -64,7 +147,13 @@ export type CvManyRelationFilter = {
 
 export type CvOrderByInput = {
   createdAt?: InputMaybe<OrderDirection>;
+  dateFrom?: InputMaybe<OrderDirection>;
+  dateTo?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  place?: InputMaybe<OrderDirection>;
+  priceExact?: InputMaybe<OrderDirection>;
+  priceFrom?: InputMaybe<OrderDirection>;
+  priceTo?: InputMaybe<OrderDirection>;
   summary?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
 };
@@ -89,6 +178,12 @@ export type CvUpdateArgs = {
 export type CvUpdateInput = {
   content?: InputMaybe<Scalars['JSON']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
+  dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  priceExact?: InputMaybe<Scalars['String']['input']>;
+  priceFrom?: InputMaybe<Scalars['String']['input']>;
+  priceTo?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<SkillRelateToManyForUpdateInput>;
   summary?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -100,7 +195,13 @@ export type CvWhereInput = {
   NOT?: InputMaybe<Array<CvWhereInput>>;
   OR?: InputMaybe<Array<CvWhereInput>>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
+  dateFrom?: InputMaybe<CalendarDayNullableFilter>;
+  dateTo?: InputMaybe<CalendarDayNullableFilter>;
   id?: InputMaybe<IdFilter>;
+  place?: InputMaybe<StringFilter>;
+  priceExact?: InputMaybe<StringFilter>;
+  priceFrom?: InputMaybe<StringFilter>;
+  priceTo?: InputMaybe<StringFilter>;
   skills?: InputMaybe<SkillManyRelationFilter>;
   summary?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
@@ -121,6 +222,17 @@ export type Cv_Content_DocumentDocumentArgs = {
   hydrateRelationships?: Scalars['Boolean']['input'];
 };
 
+export type CalendarDayNullableFilter = {
+  equals?: InputMaybe<Scalars['CalendarDay']['input']>;
+  gt?: InputMaybe<Scalars['CalendarDay']['input']>;
+  gte?: InputMaybe<Scalars['CalendarDay']['input']>;
+  in?: InputMaybe<Array<Scalars['CalendarDay']['input']>>;
+  lt?: InputMaybe<Scalars['CalendarDay']['input']>;
+  lte?: InputMaybe<Scalars['CalendarDay']['input']>;
+  not?: InputMaybe<CalendarDayNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['CalendarDay']['input']>>;
+};
+
 export type CreateInitialUserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
@@ -138,6 +250,72 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
+export type Document = {
+  __typename?: 'Document';
+  content?: Maybe<Scalars['JSON']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
+  owner?: Maybe<User>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type DocumentCreateInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DocumentManyRelationFilter = {
+  every?: InputMaybe<DocumentWhereInput>;
+  none?: InputMaybe<DocumentWhereInput>;
+  some?: InputMaybe<DocumentWhereInput>;
+};
+
+export type DocumentOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+};
+
+export type DocumentRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<DocumentWhereUniqueInput>>;
+  create?: InputMaybe<Array<DocumentCreateInput>>;
+};
+
+export type DocumentRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<DocumentWhereUniqueInput>>;
+  create?: InputMaybe<Array<DocumentCreateInput>>;
+  disconnect?: InputMaybe<Array<DocumentWhereUniqueInput>>;
+  set?: InputMaybe<Array<DocumentWhereUniqueInput>>;
+};
+
+export type DocumentUpdateArgs = {
+  data: DocumentUpdateInput;
+  where: DocumentWhereUniqueInput;
+};
+
+export type DocumentUpdateInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DocumentWhereInput = {
+  AND?: InputMaybe<Array<DocumentWhereInput>>;
+  NOT?: InputMaybe<Array<DocumentWhereInput>>;
+  OR?: InputMaybe<Array<DocumentWhereInput>>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<IdFilter>;
+  owner?: InputMaybe<UserWhereInput>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type DocumentWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type IdFilter = {
   equals?: InputMaybe<Scalars['ID']['input']>;
   gt?: InputMaybe<Scalars['ID']['input']>;
@@ -147,6 +325,173 @@ export type IdFilter = {
   lte?: InputMaybe<Scalars['ID']['input']>;
   not?: InputMaybe<IdFilter>;
   notIn?: InputMaybe<Array<Scalars['ID']['input']>>;
+};
+
+export enum ImageExtension {
+  Gif = 'gif',
+  Jpg = 'jpg',
+  Png = 'png',
+  Webp = 'webp'
+}
+
+export type ImageFieldInput = {
+  upload: Scalars['Upload']['input'];
+};
+
+export type ImageFieldOutput = {
+  __typename?: 'ImageFieldOutput';
+  extension: ImageExtension;
+  filesize: Scalars['Int']['output'];
+  height: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  url: Scalars['String']['output'];
+  width: Scalars['Int']['output'];
+};
+
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<IntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type JobVacancy = {
+  __typename?: 'JobVacancy';
+  content?: Maybe<JobVacancy_Content_Document>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  dateFrom?: Maybe<Scalars['CalendarDay']['output']>;
+  dateTo?: Maybe<Scalars['CalendarDay']['output']>;
+  id: Scalars['ID']['output'];
+  organisation?: Maybe<Organization>;
+  place?: Maybe<Scalars['String']['output']>;
+  priceExact?: Maybe<Scalars['String']['output']>;
+  priceFrom?: Maybe<Scalars['String']['output']>;
+  priceTo?: Maybe<Scalars['String']['output']>;
+  requireSelfEmployment?: Maybe<Scalars['Boolean']['output']>;
+  skills?: Maybe<Array<Skill>>;
+  skillsCount?: Maybe<Scalars['Int']['output']>;
+  summary?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type JobVacancySkillsArgs = {
+  cursor?: InputMaybe<SkillWhereUniqueInput>;
+  orderBy?: Array<SkillOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: SkillWhereInput;
+};
+
+
+export type JobVacancySkillsCountArgs = {
+  where?: SkillWhereInput;
+};
+
+export type JobVacancyCreateInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
+  dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
+  organisation?: InputMaybe<OrganizationRelateToOneForCreateInput>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  priceExact?: InputMaybe<Scalars['String']['input']>;
+  priceFrom?: InputMaybe<Scalars['String']['input']>;
+  priceTo?: InputMaybe<Scalars['String']['input']>;
+  requireSelfEmployment?: InputMaybe<Scalars['Boolean']['input']>;
+  skills?: InputMaybe<SkillRelateToManyForCreateInput>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type JobVacancyManyRelationFilter = {
+  every?: InputMaybe<JobVacancyWhereInput>;
+  none?: InputMaybe<JobVacancyWhereInput>;
+  some?: InputMaybe<JobVacancyWhereInput>;
+};
+
+export type JobVacancyOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>;
+  dateFrom?: InputMaybe<OrderDirection>;
+  dateTo?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  place?: InputMaybe<OrderDirection>;
+  priceExact?: InputMaybe<OrderDirection>;
+  priceFrom?: InputMaybe<OrderDirection>;
+  priceTo?: InputMaybe<OrderDirection>;
+  requireSelfEmployment?: InputMaybe<OrderDirection>;
+  summary?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+};
+
+export type JobVacancyRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<JobVacancyWhereUniqueInput>>;
+  create?: InputMaybe<Array<JobVacancyCreateInput>>;
+};
+
+export type JobVacancyRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<JobVacancyWhereUniqueInput>>;
+  create?: InputMaybe<Array<JobVacancyCreateInput>>;
+  disconnect?: InputMaybe<Array<JobVacancyWhereUniqueInput>>;
+  set?: InputMaybe<Array<JobVacancyWhereUniqueInput>>;
+};
+
+export type JobVacancyUpdateArgs = {
+  data: JobVacancyUpdateInput;
+  where: JobVacancyWhereUniqueInput;
+};
+
+export type JobVacancyUpdateInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
+  dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
+  organisation?: InputMaybe<OrganizationRelateToOneForUpdateInput>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  priceExact?: InputMaybe<Scalars['String']['input']>;
+  priceFrom?: InputMaybe<Scalars['String']['input']>;
+  priceTo?: InputMaybe<Scalars['String']['input']>;
+  requireSelfEmployment?: InputMaybe<Scalars['Boolean']['input']>;
+  skills?: InputMaybe<SkillRelateToManyForUpdateInput>;
+  summary?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type JobVacancyWhereInput = {
+  AND?: InputMaybe<Array<JobVacancyWhereInput>>;
+  NOT?: InputMaybe<Array<JobVacancyWhereInput>>;
+  OR?: InputMaybe<Array<JobVacancyWhereInput>>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  dateFrom?: InputMaybe<CalendarDayNullableFilter>;
+  dateTo?: InputMaybe<CalendarDayNullableFilter>;
+  id?: InputMaybe<IdFilter>;
+  organisation?: InputMaybe<OrganizationWhereInput>;
+  place?: InputMaybe<StringFilter>;
+  priceExact?: InputMaybe<StringFilter>;
+  priceFrom?: InputMaybe<StringFilter>;
+  priceTo?: InputMaybe<StringFilter>;
+  requireSelfEmployment?: InputMaybe<BooleanFilter>;
+  skills?: InputMaybe<SkillManyRelationFilter>;
+  summary?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type JobVacancyWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type JobVacancy_Content_Document = {
+  __typename?: 'JobVacancy_content_Document';
+  document: Scalars['JSON']['output'];
+};
+
+
+export type JobVacancy_Content_DocumentDocumentArgs = {
+  hydrateRelationships?: Scalars['Boolean']['input'];
 };
 
 export type KeystoneAdminMeta = {
@@ -273,9 +618,17 @@ export type KeystoneMeta = {
 export type Mutation = {
   __typename?: 'Mutation';
   authenticateUserWithPassword?: Maybe<UserAuthenticationWithPasswordResult>;
+  createAchievement?: Maybe<Achievement>;
+  createAchievements?: Maybe<Array<Maybe<Achievement>>>;
   createCV?: Maybe<Cv>;
   createCVS?: Maybe<Array<Maybe<Cv>>>;
+  createDocument?: Maybe<Document>;
+  createDocuments?: Maybe<Array<Maybe<Document>>>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
+  createJobVacancies?: Maybe<Array<Maybe<JobVacancy>>>;
+  createJobVacancy?: Maybe<JobVacancy>;
+  createOrganization?: Maybe<Organization>;
+  createOrganizations?: Maybe<Array<Maybe<Organization>>>;
   createPost?: Maybe<Post>;
   createPosts?: Maybe<Array<Maybe<Post>>>;
   createSkill?: Maybe<Skill>;
@@ -288,8 +641,16 @@ export type Mutation = {
   createUserProfile?: Maybe<UserProfile>;
   createUserProfiles?: Maybe<Array<Maybe<UserProfile>>>;
   createUsers?: Maybe<Array<Maybe<User>>>;
+  deleteAchievement?: Maybe<Achievement>;
+  deleteAchievements?: Maybe<Array<Maybe<Achievement>>>;
   deleteCV?: Maybe<Cv>;
   deleteCVS?: Maybe<Array<Maybe<Cv>>>;
+  deleteDocument?: Maybe<Document>;
+  deleteDocuments?: Maybe<Array<Maybe<Document>>>;
+  deleteJobVacancies?: Maybe<Array<Maybe<JobVacancy>>>;
+  deleteJobVacancy?: Maybe<JobVacancy>;
+  deleteOrganization?: Maybe<Organization>;
+  deleteOrganizations?: Maybe<Array<Maybe<Organization>>>;
   deletePost?: Maybe<Post>;
   deletePosts?: Maybe<Array<Maybe<Post>>>;
   deleteSkill?: Maybe<Skill>;
@@ -303,8 +664,16 @@ export type Mutation = {
   deleteUserProfiles?: Maybe<Array<Maybe<UserProfile>>>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   endSession: Scalars['Boolean']['output'];
+  updateAchievement?: Maybe<Achievement>;
+  updateAchievements?: Maybe<Array<Maybe<Achievement>>>;
   updateCV?: Maybe<Cv>;
   updateCVS?: Maybe<Array<Maybe<Cv>>>;
+  updateDocument?: Maybe<Document>;
+  updateDocuments?: Maybe<Array<Maybe<Document>>>;
+  updateJobVacancies?: Maybe<Array<Maybe<JobVacancy>>>;
+  updateJobVacancy?: Maybe<JobVacancy>;
+  updateOrganization?: Maybe<Organization>;
+  updateOrganizations?: Maybe<Array<Maybe<Organization>>>;
   updatePost?: Maybe<Post>;
   updatePosts?: Maybe<Array<Maybe<Post>>>;
   updateSkill?: Maybe<Skill>;
@@ -326,6 +695,16 @@ export type MutationAuthenticateUserWithPasswordArgs = {
 };
 
 
+export type MutationCreateAchievementArgs = {
+  data: AchievementCreateInput;
+};
+
+
+export type MutationCreateAchievementsArgs = {
+  data: Array<AchievementCreateInput>;
+};
+
+
 export type MutationCreateCvArgs = {
   data: CvCreateInput;
 };
@@ -336,8 +715,38 @@ export type MutationCreateCvsArgs = {
 };
 
 
+export type MutationCreateDocumentArgs = {
+  data: DocumentCreateInput;
+};
+
+
+export type MutationCreateDocumentsArgs = {
+  data: Array<DocumentCreateInput>;
+};
+
+
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
+};
+
+
+export type MutationCreateJobVacanciesArgs = {
+  data: Array<JobVacancyCreateInput>;
+};
+
+
+export type MutationCreateJobVacancyArgs = {
+  data: JobVacancyCreateInput;
+};
+
+
+export type MutationCreateOrganizationArgs = {
+  data: OrganizationCreateInput;
+};
+
+
+export type MutationCreateOrganizationsArgs = {
+  data: Array<OrganizationCreateInput>;
 };
 
 
@@ -401,6 +810,16 @@ export type MutationCreateUsersArgs = {
 };
 
 
+export type MutationDeleteAchievementArgs = {
+  where: AchievementWhereUniqueInput;
+};
+
+
+export type MutationDeleteAchievementsArgs = {
+  where: Array<AchievementWhereUniqueInput>;
+};
+
+
 export type MutationDeleteCvArgs = {
   where: CvWhereUniqueInput;
 };
@@ -408,6 +827,36 @@ export type MutationDeleteCvArgs = {
 
 export type MutationDeleteCvsArgs = {
   where: Array<CvWhereUniqueInput>;
+};
+
+
+export type MutationDeleteDocumentArgs = {
+  where: DocumentWhereUniqueInput;
+};
+
+
+export type MutationDeleteDocumentsArgs = {
+  where: Array<DocumentWhereUniqueInput>;
+};
+
+
+export type MutationDeleteJobVacanciesArgs = {
+  where: Array<JobVacancyWhereUniqueInput>;
+};
+
+
+export type MutationDeleteJobVacancyArgs = {
+  where: JobVacancyWhereUniqueInput;
+};
+
+
+export type MutationDeleteOrganizationArgs = {
+  where: OrganizationWhereUniqueInput;
+};
+
+
+export type MutationDeleteOrganizationsArgs = {
+  where: Array<OrganizationWhereUniqueInput>;
 };
 
 
@@ -471,6 +920,17 @@ export type MutationDeleteUsersArgs = {
 };
 
 
+export type MutationUpdateAchievementArgs = {
+  data: AchievementUpdateInput;
+  where: AchievementWhereUniqueInput;
+};
+
+
+export type MutationUpdateAchievementsArgs = {
+  data: Array<AchievementUpdateArgs>;
+};
+
+
 export type MutationUpdateCvArgs = {
   data: CvUpdateInput;
   where: CvWhereUniqueInput;
@@ -479,6 +939,39 @@ export type MutationUpdateCvArgs = {
 
 export type MutationUpdateCvsArgs = {
   data: Array<CvUpdateArgs>;
+};
+
+
+export type MutationUpdateDocumentArgs = {
+  data: DocumentUpdateInput;
+  where: DocumentWhereUniqueInput;
+};
+
+
+export type MutationUpdateDocumentsArgs = {
+  data: Array<DocumentUpdateArgs>;
+};
+
+
+export type MutationUpdateJobVacanciesArgs = {
+  data: Array<JobVacancyUpdateArgs>;
+};
+
+
+export type MutationUpdateJobVacancyArgs = {
+  data: JobVacancyUpdateInput;
+  where: JobVacancyWhereUniqueInput;
+};
+
+
+export type MutationUpdateOrganizationArgs = {
+  data: OrganizationUpdateInput;
+  where: OrganizationWhereUniqueInput;
+};
+
+
+export type MutationUpdateOrganizationsArgs = {
+  data: Array<OrganizationUpdateArgs>;
 };
 
 
@@ -565,6 +1058,97 @@ export enum OrderDirection {
   Asc = 'asc',
   Desc = 'desc'
 }
+
+export type Organization = {
+  __typename?: 'Organization';
+  address?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  inn?: Maybe<Scalars['String']['output']>;
+  jobVacancies?: Maybe<Array<JobVacancy>>;
+  jobVacanciesCount?: Maybe<Scalars['Int']['output']>;
+  ogrn?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type OrganizationJobVacanciesArgs = {
+  cursor?: InputMaybe<JobVacancyWhereUniqueInput>;
+  orderBy?: Array<JobVacancyOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: JobVacancyWhereInput;
+};
+
+
+export type OrganizationJobVacanciesCountArgs = {
+  where?: JobVacancyWhereInput;
+};
+
+export type OrganizationCreateInput = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  inn?: InputMaybe<Scalars['String']['input']>;
+  jobVacancies?: InputMaybe<JobVacancyRelateToManyForCreateInput>;
+  ogrn?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrganizationOrderByInput = {
+  address?: InputMaybe<OrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  inn?: InputMaybe<OrderDirection>;
+  ogrn?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+};
+
+export type OrganizationRelateToOneForCreateInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  create?: InputMaybe<OrganizationCreateInput>;
+};
+
+export type OrganizationRelateToOneForUpdateInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  create?: InputMaybe<OrganizationCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type OrganizationUpdateArgs = {
+  data: OrganizationUpdateInput;
+  where: OrganizationWhereUniqueInput;
+};
+
+export type OrganizationUpdateInput = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  inn?: InputMaybe<Scalars['String']['input']>;
+  jobVacancies?: InputMaybe<JobVacancyRelateToManyForUpdateInput>;
+  ogrn?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrganizationWhereInput = {
+  AND?: InputMaybe<Array<OrganizationWhereInput>>;
+  NOT?: InputMaybe<Array<OrganizationWhereInput>>;
+  OR?: InputMaybe<Array<OrganizationWhereInput>>;
+  address?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  inn?: InputMaybe<StringFilter>;
+  jobVacancies?: InputMaybe<JobVacancyManyRelationFilter>;
+  ogrn?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type OrganizationWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
 
 export type PasswordState = {
   __typename?: 'PasswordState';
@@ -668,11 +1252,23 @@ export type Post_Content_DocumentDocumentArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  achievement?: Maybe<Achievement>;
+  achievements?: Maybe<Array<Achievement>>;
+  achievementsCount?: Maybe<Scalars['Int']['output']>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
   cV?: Maybe<Cv>;
   cVS?: Maybe<Array<Cv>>;
   cVSCount?: Maybe<Scalars['Int']['output']>;
+  document?: Maybe<Document>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  jobVacancies?: Maybe<Array<JobVacancy>>;
+  jobVacanciesCount?: Maybe<Scalars['Int']['output']>;
+  jobVacancy?: Maybe<JobVacancy>;
   keystone: KeystoneMeta;
+  organization?: Maybe<Organization>;
+  organizations?: Maybe<Array<Organization>>;
+  organizationsCount?: Maybe<Scalars['Int']['output']>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Post>>;
   postsCount?: Maybe<Scalars['Int']['output']>;
@@ -694,6 +1290,25 @@ export type Query = {
 };
 
 
+export type QueryAchievementArgs = {
+  where: AchievementWhereUniqueInput;
+};
+
+
+export type QueryAchievementsArgs = {
+  cursor?: InputMaybe<AchievementWhereUniqueInput>;
+  orderBy?: Array<AchievementOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AchievementWhereInput;
+};
+
+
+export type QueryAchievementsCountArgs = {
+  where?: AchievementWhereInput;
+};
+
+
 export type QueryCvArgs = {
   where: CvWhereUniqueInput;
 };
@@ -710,6 +1325,63 @@ export type QueryCVsArgs = {
 
 export type QueryCVsCountArgs = {
   where?: CvWhereInput;
+};
+
+
+export type QueryDocumentArgs = {
+  where: DocumentWhereUniqueInput;
+};
+
+
+export type QueryDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DocumentWhereInput;
+};
+
+
+export type QueryDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type QueryJobVacanciesArgs = {
+  cursor?: InputMaybe<JobVacancyWhereUniqueInput>;
+  orderBy?: Array<JobVacancyOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: JobVacancyWhereInput;
+};
+
+
+export type QueryJobVacanciesCountArgs = {
+  where?: JobVacancyWhereInput;
+};
+
+
+export type QueryJobVacancyArgs = {
+  where: JobVacancyWhereUniqueInput;
+};
+
+
+export type QueryOrganizationArgs = {
+  where: OrganizationWhereUniqueInput;
+};
+
+
+export type QueryOrganizationsArgs = {
+  cursor?: InputMaybe<OrganizationWhereUniqueInput>;
+  orderBy?: Array<OrganizationOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: OrganizationWhereInput;
+};
+
+
+export type QueryOrganizationsCountArgs = {
+  where?: OrganizationWhereInput;
 };
 
 
@@ -837,6 +1509,8 @@ export type Skill = {
   cvsCount?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  jobVacancies?: Maybe<Array<JobVacancy>>;
+  jobVacanciesCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -854,9 +1528,24 @@ export type SkillCvsCountArgs = {
   where?: CvWhereInput;
 };
 
+
+export type SkillJobVacanciesArgs = {
+  cursor?: InputMaybe<JobVacancyWhereUniqueInput>;
+  orderBy?: Array<JobVacancyOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: JobVacancyWhereInput;
+};
+
+
+export type SkillJobVacanciesCountArgs = {
+  where?: JobVacancyWhereInput;
+};
+
 export type SkillCreateInput = {
   cvs?: InputMaybe<CvRelateToManyForCreateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
+  jobVacancies?: InputMaybe<JobVacancyRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -892,6 +1581,7 @@ export type SkillUpdateArgs = {
 export type SkillUpdateInput = {
   cvs?: InputMaybe<CvRelateToManyForUpdateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
+  jobVacancies?: InputMaybe<JobVacancyRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -902,6 +1592,7 @@ export type SkillWhereInput = {
   cvs?: InputMaybe<CvManyRelationFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
+  jobVacancies?: InputMaybe<JobVacancyManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -916,6 +1607,7 @@ export type Story = {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   mediaUrl?: Maybe<Scalars['String']['output']>;
+  thumbUrl?: Maybe<ImageFieldOutput>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -924,6 +1616,7 @@ export type StoryCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  thumbUrl?: InputMaybe<ImageFieldInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -963,6 +1656,7 @@ export type StoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  thumbUrl?: InputMaybe<ImageFieldInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1079,6 +1773,8 @@ export type User = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   cvs?: Maybe<Array<Cv>>;
   cvsCount?: Maybe<Scalars['Int']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   password?: Maybe<PasswordState>;
@@ -1104,6 +1800,20 @@ export type UserCvsArgs = {
 
 export type UserCvsCountArgs = {
   where?: CvWhereInput;
+};
+
+
+export type UserDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DocumentWhereInput;
+};
+
+
+export type UserDocumentsCountArgs = {
+  where?: DocumentWhereInput;
 };
 
 
@@ -1150,6 +1860,7 @@ export type UserAuthenticationWithPasswordSuccess = {
 export type UserCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   cvs?: InputMaybe<CvRelateToManyForCreateInput>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
@@ -1171,28 +1882,59 @@ export type UserOrderByInput = {
 
 export type UserProfile = {
   __typename?: 'UserProfile';
-  dateOfBirth?: Maybe<Scalars['String']['output']>;
+  achievements?: Maybe<Array<Achievement>>;
+  achievementsCount?: Maybe<Scalars['Int']['output']>;
+  birth?: Maybe<Scalars['CalendarDay']['output']>;
+  competitionLevel?: Maybe<Scalars['Int']['output']>;
+  competitionPoints?: Maybe<Scalars['Int']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
   middleName?: Maybe<Scalars['String']['output']>;
+  photoUrl?: Maybe<ImageFieldOutput>;
+  reviewsCount?: Maybe<Scalars['Int']['output']>;
+  starsCount?: Maybe<Scalars['Int']['output']>;
   user?: Maybe<User>;
 };
 
+
+export type UserProfileAchievementsArgs = {
+  cursor?: InputMaybe<AchievementWhereUniqueInput>;
+  orderBy?: Array<AchievementOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AchievementWhereInput;
+};
+
+
+export type UserProfileAchievementsCountArgs = {
+  where?: AchievementWhereInput;
+};
+
 export type UserProfileCreateInput = {
-  dateOfBirth?: InputMaybe<Scalars['String']['input']>;
+  achievements?: InputMaybe<AchievementRelateToManyForCreateInput>;
+  birth?: InputMaybe<Scalars['CalendarDay']['input']>;
+  competitionLevel?: InputMaybe<Scalars['Int']['input']>;
+  competitionPoints?: InputMaybe<Scalars['Int']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
+  photoUrl?: InputMaybe<ImageFieldInput>;
+  reviewsCount?: InputMaybe<Scalars['Int']['input']>;
+  starsCount?: InputMaybe<Scalars['Int']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
 
 export type UserProfileOrderByInput = {
-  dateOfBirth?: InputMaybe<OrderDirection>;
+  birth?: InputMaybe<OrderDirection>;
+  competitionLevel?: InputMaybe<OrderDirection>;
+  competitionPoints?: InputMaybe<OrderDirection>;
   firstName?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   lastName?: InputMaybe<OrderDirection>;
   middleName?: InputMaybe<OrderDirection>;
+  reviewsCount?: InputMaybe<OrderDirection>;
+  starsCount?: InputMaybe<OrderDirection>;
 };
 
 export type UserProfileRelateToOneForCreateInput = {
@@ -1212,10 +1954,16 @@ export type UserProfileUpdateArgs = {
 };
 
 export type UserProfileUpdateInput = {
-  dateOfBirth?: InputMaybe<Scalars['String']['input']>;
+  achievements?: InputMaybe<AchievementRelateToManyForUpdateInput>;
+  birth?: InputMaybe<Scalars['CalendarDay']['input']>;
+  competitionLevel?: InputMaybe<Scalars['Int']['input']>;
+  competitionPoints?: InputMaybe<Scalars['Int']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
+  photoUrl?: InputMaybe<ImageFieldInput>;
+  reviewsCount?: InputMaybe<Scalars['Int']['input']>;
+  starsCount?: InputMaybe<Scalars['Int']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
 };
 
@@ -1223,11 +1971,16 @@ export type UserProfileWhereInput = {
   AND?: InputMaybe<Array<UserProfileWhereInput>>;
   NOT?: InputMaybe<Array<UserProfileWhereInput>>;
   OR?: InputMaybe<Array<UserProfileWhereInput>>;
-  dateOfBirth?: InputMaybe<StringFilter>;
+  achievements?: InputMaybe<AchievementManyRelationFilter>;
+  birth?: InputMaybe<CalendarDayNullableFilter>;
+  competitionLevel?: InputMaybe<IntNullableFilter>;
+  competitionPoints?: InputMaybe<IntNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   lastName?: InputMaybe<StringFilter>;
   middleName?: InputMaybe<StringFilter>;
+  reviewsCount?: InputMaybe<IntNullableFilter>;
+  starsCount?: InputMaybe<IntNullableFilter>;
   user?: InputMaybe<UserWhereInput>;
 };
 
@@ -1254,6 +2007,7 @@ export type UserUpdateArgs = {
 export type UserUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   cvs?: InputMaybe<CvRelateToManyForUpdateInput>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
@@ -1270,6 +2024,7 @@ export type UserWhereInput = {
   OR?: InputMaybe<Array<UserWhereInput>>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   cvs?: InputMaybe<CvManyRelationFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
   email?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   phoneNumber?: InputMaybe<StringFilter>;
