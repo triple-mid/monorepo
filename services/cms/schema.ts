@@ -241,6 +241,9 @@ export const lists: Lists = {
         fields: {
             author: relationship({ ref: 'User.stories' }),
 
+            thumbUrl: image({
+                storage: 'images',
+            }),
             mediaUrl: text(),
             title: text({ validation: { isRequired: true } }),
             description: text(),
