@@ -18,5 +18,10 @@ export default withAuth(
         },
         lists,
         session,
+        ui: {
+            isAccessAllowed: (context) => {
+                return context.session?.data.role === 'admin' ?? false;
+            },
+        },
     }),
 );

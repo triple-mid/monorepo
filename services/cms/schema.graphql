@@ -4,14 +4,18 @@
 type User {
   id: ID!
   username: String
-  password: PasswordState
   email: String
-  firstName: String
-  lastName: String
-  middleName: String
+  phoneNumber: String
+  password: PasswordState
+  role: String
   createdAt: DateTime
+  profile: UserProfile
+  cvs(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
+  cvsCount(where: CVWhereInput! = {}): Int
   posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
+  stories(where: StoryWhereInput! = {}, orderBy: [StoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StoryWhereUniqueInput): [Story!]
+  storiesCount(where: StoryWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -24,6 +28,7 @@ input UserWhereUniqueInput {
   id: ID
   username: String
   email: String
+  phoneNumber: String
 }
 
 input UserWhereInput {
@@ -33,11 +38,13 @@ input UserWhereInput {
   id: IDFilter
   username: StringFilter
   email: StringFilter
-  firstName: StringFilter
-  lastName: StringFilter
-  middleName: StringFilter
+  phoneNumber: StringFilter
+  role: StringFilter
   createdAt: DateTimeNullableFilter
+  profile: UserProfileWhereInput
+  cvs: CVManyRelationFilter
   posts: PostManyRelationFilter
+  stories: StoryManyRelationFilter
 }
 
 input IDFilter {
@@ -90,19 +97,30 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input CVManyRelationFilter {
+  every: CVWhereInput
+  some: CVWhereInput
+  none: CVWhereInput
+}
+
 input PostManyRelationFilter {
   every: PostWhereInput
   some: PostWhereInput
   none: PostWhereInput
 }
 
+input StoryManyRelationFilter {
+  every: StoryWhereInput
+  some: StoryWhereInput
+  none: StoryWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   username: OrderDirection
   email: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  middleName: OrderDirection
+  phoneNumber: OrderDirection
+  role: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -113,13 +131,28 @@ enum OrderDirection {
 
 input UserUpdateInput {
   username: String
-  password: String
   email: String
-  firstName: String
-  lastName: String
-  middleName: String
+  phoneNumber: String
+  password: String
+  role: String
   createdAt: DateTime
+  profile: UserProfileRelateToOneForUpdateInput
+  cvs: CVRelateToManyForUpdateInput
   posts: PostRelateToManyForUpdateInput
+  stories: StoryRelateToManyForUpdateInput
+}
+
+input UserProfileRelateToOneForUpdateInput {
+  create: UserProfileCreateInput
+  connect: UserProfileWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CVRelateToManyForUpdateInput {
+  disconnect: [CVWhereUniqueInput!]
+  set: [CVWhereUniqueInput!]
+  create: [CVCreateInput!]
+  connect: [CVWhereUniqueInput!]
 }
 
 input PostRelateToManyForUpdateInput {
@@ -129,6 +162,13 @@ input PostRelateToManyForUpdateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input StoryRelateToManyForUpdateInput {
+  disconnect: [StoryWhereUniqueInput!]
+  set: [StoryWhereUniqueInput!]
+  create: [StoryCreateInput!]
+  connect: [StoryWhereUniqueInput!]
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -136,13 +176,25 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   username: String
-  password: String
   email: String
-  firstName: String
-  lastName: String
-  middleName: String
+  phoneNumber: String
+  password: String
+  role: String
   createdAt: DateTime
+  profile: UserProfileRelateToOneForCreateInput
+  cvs: CVRelateToManyForCreateInput
   posts: PostRelateToManyForCreateInput
+  stories: StoryRelateToManyForCreateInput
+}
+
+input UserProfileRelateToOneForCreateInput {
+  create: UserProfileCreateInput
+  connect: UserProfileWhereUniqueInput
+}
+
+input CVRelateToManyForCreateInput {
+  create: [CVCreateInput!]
+  connect: [CVWhereUniqueInput!]
 }
 
 input PostRelateToManyForCreateInput {
@@ -150,11 +202,206 @@ input PostRelateToManyForCreateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input StoryRelateToManyForCreateInput {
+  create: [StoryCreateInput!]
+  connect: [StoryWhereUniqueInput!]
+}
+
+type UserProfile {
+  id: ID!
+  firstName: String
+  lastName: String
+  middleName: String
+  dateOfBirth: String
+  user: User
+}
+
+input UserProfileWhereUniqueInput {
+  id: ID
+}
+
+input UserProfileWhereInput {
+  AND: [UserProfileWhereInput!]
+  OR: [UserProfileWhereInput!]
+  NOT: [UserProfileWhereInput!]
+  id: IDFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  middleName: StringFilter
+  dateOfBirth: StringFilter
+  user: UserWhereInput
+}
+
+input UserProfileOrderByInput {
+  id: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  middleName: OrderDirection
+  dateOfBirth: OrderDirection
+}
+
+input UserProfileUpdateInput {
+  firstName: String
+  lastName: String
+  middleName: String
+  dateOfBirth: String
+  user: UserRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserProfileUpdateArgs {
+  where: UserProfileWhereUniqueInput!
+  data: UserProfileUpdateInput!
+}
+
+input UserProfileCreateInput {
+  firstName: String
+  lastName: String
+  middleName: String
+  dateOfBirth: String
+  user: UserRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+type CV {
+  id: ID!
+  user: User
+  title: String
+  summary: String
+  content: CV_content_Document
+  skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
+  skillsCount(where: SkillWhereInput! = {}): Int
+  createdAt: DateTime
+}
+
+type CV_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input CVWhereUniqueInput {
+  id: ID
+}
+
+input CVWhereInput {
+  AND: [CVWhereInput!]
+  OR: [CVWhereInput!]
+  NOT: [CVWhereInput!]
+  id: IDFilter
+  user: UserWhereInput
+  title: StringFilter
+  summary: StringFilter
+  skills: SkillManyRelationFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input SkillManyRelationFilter {
+  every: SkillWhereInput
+  some: SkillWhereInput
+  none: SkillWhereInput
+}
+
+input CVOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  summary: OrderDirection
+  createdAt: OrderDirection
+}
+
+input CVUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  title: String
+  summary: String
+  content: JSON
+  skills: SkillRelateToManyForUpdateInput
+  createdAt: DateTime
+}
+
+input SkillRelateToManyForUpdateInput {
+  disconnect: [SkillWhereUniqueInput!]
+  set: [SkillWhereUniqueInput!]
+  create: [SkillCreateInput!]
+  connect: [SkillWhereUniqueInput!]
+}
+
+input CVUpdateArgs {
+  where: CVWhereUniqueInput!
+  data: CVUpdateInput!
+}
+
+input CVCreateInput {
+  user: UserRelateToOneForCreateInput
+  title: String
+  summary: String
+  content: JSON
+  skills: SkillRelateToManyForCreateInput
+  createdAt: DateTime
+}
+
+input SkillRelateToManyForCreateInput {
+  create: [SkillCreateInput!]
+  connect: [SkillWhereUniqueInput!]
+}
+
+type Skill {
+  id: ID!
+  title: String
+  description: String
+  cvs(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
+  cvsCount(where: CVWhereInput! = {}): Int
+}
+
+input SkillWhereUniqueInput {
+  id: ID
+}
+
+input SkillWhereInput {
+  AND: [SkillWhereInput!]
+  OR: [SkillWhereInput!]
+  NOT: [SkillWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  cvs: CVManyRelationFilter
+}
+
+input SkillOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+}
+
+input SkillUpdateInput {
+  title: String
+  description: String
+  cvs: CVRelateToManyForUpdateInput
+}
+
+input SkillUpdateArgs {
+  where: SkillWhereUniqueInput!
+  data: SkillUpdateInput!
+}
+
+input SkillCreateInput {
+  title: String
+  description: String
+  cvs: CVRelateToManyForCreateInput
+}
+
 type Post {
   id: ID!
   title: String
   content: Post_content_Document
   author: User
+  createdAt: DateTime
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
 }
@@ -174,6 +421,7 @@ input PostWhereInput {
   id: IDFilter
   title: StringFilter
   author: UserWhereInput
+  createdAt: DateTimeNullableFilter
   tags: TagManyRelationFilter
 }
 
@@ -186,19 +434,15 @@ input TagManyRelationFilter {
 input PostOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  createdAt: OrderDirection
 }
 
 input PostUpdateInput {
   title: String
   content: JSON
   author: UserRelateToOneForUpdateInput
+  createdAt: DateTime
   tags: TagRelateToManyForUpdateInput
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
 }
 
 input TagRelateToManyForUpdateInput {
@@ -217,12 +461,8 @@ input PostCreateInput {
   title: String
   content: JSON
   author: UserRelateToOneForCreateInput
+  createdAt: DateTime
   tags: TagRelateToManyForCreateInput
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input TagRelateToManyForCreateInput {
@@ -232,7 +472,8 @@ input TagRelateToManyForCreateInput {
 
 type Tag {
   id: ID!
-  firstName: String
+  title: String
+  description: String
   posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
 }
@@ -246,17 +487,20 @@ input TagWhereInput {
   OR: [TagWhereInput!]
   NOT: [TagWhereInput!]
   id: IDFilter
-  firstName: StringFilter
+  title: StringFilter
+  description: StringFilter
   posts: PostManyRelationFilter
 }
 
 input TagOrderByInput {
   id: OrderDirection
-  firstName: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
 }
 
 input TagUpdateInput {
-  firstName: String
+  title: String
+  description: String
   posts: PostRelateToManyForUpdateInput
 }
 
@@ -266,8 +510,63 @@ input TagUpdateArgs {
 }
 
 input TagCreateInput {
-  firstName: String
+  title: String
+  description: String
   posts: PostRelateToManyForCreateInput
+}
+
+type Story {
+  id: ID!
+  author: User
+  mediaUrl: String
+  title: String
+  description: String
+  createdAt: DateTime
+}
+
+input StoryWhereUniqueInput {
+  id: ID
+}
+
+input StoryWhereInput {
+  AND: [StoryWhereInput!]
+  OR: [StoryWhereInput!]
+  NOT: [StoryWhereInput!]
+  id: IDFilter
+  author: UserWhereInput
+  mediaUrl: StringFilter
+  title: StringFilter
+  description: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input StoryOrderByInput {
+  id: OrderDirection
+  mediaUrl: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+}
+
+input StoryUpdateInput {
+  author: UserRelateToOneForUpdateInput
+  mediaUrl: String
+  title: String
+  description: String
+  createdAt: DateTime
+}
+
+input StoryUpdateArgs {
+  where: StoryWhereUniqueInput!
+  data: StoryUpdateInput!
+}
+
+input StoryCreateInput {
+  author: UserRelateToOneForCreateInput
+  mediaUrl: String
+  title: String
+  description: String
+  createdAt: DateTime
 }
 
 """
@@ -282,6 +581,24 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createUserProfile(data: UserProfileCreateInput!): UserProfile
+  createUserProfiles(data: [UserProfileCreateInput!]!): [UserProfile]
+  updateUserProfile(where: UserProfileWhereUniqueInput!, data: UserProfileUpdateInput!): UserProfile
+  updateUserProfiles(data: [UserProfileUpdateArgs!]!): [UserProfile]
+  deleteUserProfile(where: UserProfileWhereUniqueInput!): UserProfile
+  deleteUserProfiles(where: [UserProfileWhereUniqueInput!]!): [UserProfile]
+  createCV(data: CVCreateInput!): CV
+  createCVS(data: [CVCreateInput!]!): [CV]
+  updateCV(where: CVWhereUniqueInput!, data: CVUpdateInput!): CV
+  updateCVS(data: [CVUpdateArgs!]!): [CV]
+  deleteCV(where: CVWhereUniqueInput!): CV
+  deleteCVS(where: [CVWhereUniqueInput!]!): [CV]
+  createSkill(data: SkillCreateInput!): Skill
+  createSkills(data: [SkillCreateInput!]!): [Skill]
+  updateSkill(where: SkillWhereUniqueInput!, data: SkillUpdateInput!): Skill
+  updateSkills(data: [SkillUpdateArgs!]!): [Skill]
+  deleteSkill(where: SkillWhereUniqueInput!): Skill
+  deleteSkills(where: [SkillWhereUniqueInput!]!): [Skill]
   createPost(data: PostCreateInput!): Post
   createPosts(data: [PostCreateInput!]!): [Post]
   updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
@@ -294,6 +611,12 @@ type Mutation {
   updateTags(data: [TagUpdateArgs!]!): [Tag]
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  createStory(data: StoryCreateInput!): Story
+  createStories(data: [StoryCreateInput!]!): [Story]
+  updateStory(where: StoryWhereUniqueInput!, data: StoryUpdateInput!): Story
+  updateStories(data: [StoryUpdateArgs!]!): [Story]
+  deleteStory(where: StoryWhereUniqueInput!): Story
+  deleteStories(where: [StoryWhereUniqueInput!]!): [Story]
   endSession: Boolean!
   authenticateUserWithPassword(username: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -312,6 +635,7 @@ type UserAuthenticationWithPasswordFailure {
 
 input CreateInitialUserInput {
   username: String
+  phoneNumber: String
   password: String
 }
 
@@ -319,12 +643,24 @@ type Query {
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  userProfiles(where: UserProfileWhereInput! = {}, orderBy: [UserProfileOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserProfileWhereUniqueInput): [UserProfile!]
+  userProfile(where: UserProfileWhereUniqueInput!): UserProfile
+  userProfilesCount(where: UserProfileWhereInput! = {}): Int
+  cVS(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
+  cV(where: CVWhereUniqueInput!): CV
+  cVSCount(where: CVWhereInput! = {}): Int
+  skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
+  skill(where: SkillWhereUniqueInput!): Skill
+  skillsCount(where: SkillWhereInput! = {}): Int
   posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
+  stories(where: StoryWhereInput! = {}, orderBy: [StoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StoryWhereUniqueInput): [Story!]
+  story(where: StoryWhereUniqueInput!): Story
+  storiesCount(where: StoryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

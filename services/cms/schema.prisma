@@ -12,30 +12,76 @@ generator client {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  username   String    @unique @default("")
-  password   String
-  email      String    @unique @default("")
-  firstName  String    @default("")
-  lastName   String    @default("")
-  middleName String    @default("")
-  createdAt  DateTime? @default(now())
-  posts      Post[]    @relation("Post_author")
+  id          String       @id @default(cuid())
+  username    String       @unique @default("")
+  email       String       @unique @default("")
+  phoneNumber String       @unique @default("")
+  password    String
+  role        String       @default("admin")
+  createdAt   DateTime?    @default(now())
+  profile     UserProfile? @relation("User_profile", fields: [profileId], references: [id])
+  profileId   String?      @unique @map("profile")
+  cvs         CV[]         @relation("CV_user")
+  posts       Post[]       @relation("Post_author")
+  stories     Story[]      @relation("Story_author")
+}
+
+model UserProfile {
+  id          String @id @default(cuid())
+  firstName   String @default("")
+  lastName    String @default("")
+  middleName  String @default("")
+  dateOfBirth String @default("")
+  user        User?  @relation("User_profile")
+}
+
+model CV {
+  id        String    @id @default(cuid())
+  user      User?     @relation("CV_user", fields: [userId], references: [id])
+  userId    String?   @map("user")
+  title     String    @default("")
+  summary   String    @default("")
+  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  skills    Skill[]   @relation("CV_skills")
+  createdAt DateTime? @default(now())
+
+  @@index([userId])
+}
+
+model Skill {
+  id          String @id @default(cuid())
+  title       String @default("")
+  description String @default("")
+  cvs         CV[]   @relation("CV_skills")
 }
 
 model Post {
-  id       String  @id @default(cuid())
-  title    String  @default("")
-  content  String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  author   User?   @relation("Post_author", fields: [authorId], references: [id])
-  authorId String? @map("author")
-  tags     Tag[]   @relation("Post_tags")
+  id        String    @id @default(cuid())
+  title     String    @default("")
+  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  author    User?     @relation("Post_author", fields: [authorId], references: [id])
+  authorId  String?   @map("author")
+  createdAt DateTime? @default(now())
+  tags      Tag[]     @relation("Post_tags")
 
   @@index([authorId])
 }
 
 model Tag {
-  id        String @id @default(cuid())
-  firstName String @default("")
-  posts     Post[] @relation("Post_tags")
+  id          String @id @default(cuid())
+  title       String @default("")
+  description String @default("")
+  posts       Post[] @relation("Post_tags")
+}
+
+model Story {
+  id          String    @id @default(cuid())
+  author      User?     @relation("Story_author", fields: [authorId], references: [id])
+  authorId    String?   @map("author")
+  mediaUrl    String    @default("")
+  title       String    @default("")
+  description String    @default("")
+  createdAt   DateTime? @default(now())
+
+  @@index([authorId])
 }

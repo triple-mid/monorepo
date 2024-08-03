@@ -13,11 +13,11 @@ const { withAuth } = createAuth({
     listKey: 'User',
     identityField: 'username',
 
-    sessionData: 'username createdAt',
+    sessionData: 'username phoneNumber role createdAt',
     secretField: 'password',
 
     initFirstItem: {
-        fields: ['username', 'password'],
+        fields: ['username', 'phoneNumber', 'password'],
     },
 });
 

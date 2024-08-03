@@ -2,6 +2,7 @@ import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 
 import {
+    calendarDay,
     password,
     relationship,
     select,
@@ -22,20 +23,94 @@ export const lists: Lists = {
                 validation: { isRequired: true },
                 isIndexed: 'unique',
             }),
+            email: text({ isIndexed: 'unique' }),
+            phoneNumber: text({
+                isIndexed: 'unique',
+                validation: { isRequired: true },
+            }),
             password: password({ validation: { isRequired: true } }),
 
-            email: text({
-                validation: { isRequired: false },
-                isIndexed: 'unique',
+            role: select({
+                validation: { isRequired: true },
+                options: [
+                    { label: 'Admin', value: 'admin' },
+                    { label: 'HR', value: 'hr' },
+                    { label: 'Соискатель', value: 'candidate' },
+                ],
+                defaultValue: 'admin',
             }),
-
-            firstName: text({ validation: { isRequired: false } }),
-            lastName: text({ validation: { isRequired: false } }),
-            middleName: text({ validation: { isRequired: false } }),
 
             createdAt: timestamp({ defaultValue: { kind: 'now' } }),
 
+            profile: relationship({ ref: 'UserProfile.user' }),
+
+            cvs: relationship({ ref: 'CV.user', many: true }),
             posts: relationship({ ref: 'Post.author', many: true }),
+            stories: relationship({ ref: 'Story.author', many: true }),
+        },
+    }),
+    UserProfile: list({
+        access: allowAll,
+
+        fields: {
+            firstName: text(),
+            lastName: text(),
+            middleName: text(),
+            dateOfBirth: text(),
+            user: relationship({ ref: 'User.profile' }),
+        },
+    }),
+
+    CV: list({
+        access: allowAll,
+
+        fields: {
+            user: relationship({ ref: 'User.cvs' }),
+
+            title: text({ validation: { isRequired: true } }),
+
+            salary: text(),
+            place: text(),
+            dateFrom: calendarDay(),
+            dateTo: calendarDay(),
+
+            summary: text(),
+            content: document({
+                formatting: true,
+                layouts: [
+                    [1, 1],
+                    [1, 1, 1],
+                    [2, 1],
+                    [1, 2],
+                    [1, 2, 1],
+                ],
+                links: true,
+                dividers: true,
+            }),
+            skills: relationship({
+                ref: 'Skill.cvs',
+                many: true,
+
+                ui: {
+                    displayMode: 'cards',
+                    cardFields: ['title', 'description'],
+                    inlineEdit: { fields: ['title', 'description'] },
+                    linkToItem: true,
+                    inlineConnect: true,
+                    inlineCreate: { fields: ['title', 'description'] },
+                },
+            }),
+
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
+        },
+    }),
+    Skill: list({
+        access: allowAll,
+
+        fields: {
+            title: text({ validation: { isRequired: true } }),
+            description: text({ validation: { isRequired: true } }),
+            cvs: relationship({ ref: 'CV.skills', many: true }),
         },
     }),
 
@@ -61,23 +136,24 @@ export const lists: Lists = {
 
                 ui: {
                     displayMode: 'cards',
-                    cardFields: ['firstName', 'email'],
-                    inlineEdit: { fields: ['firstName', 'email'] },
+                    cardFields: ['username', 'email'],
+                    inlineEdit: { fields: ['username', 'email'] },
                     linkToItem: true,
                     inlineConnect: true,
                 },
             }),
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
             tags: relationship({
                 ref: 'Tag.posts',
                 many: true,
 
                 ui: {
                     displayMode: 'cards',
-                    cardFields: ['firstName'],
-                    inlineEdit: { fields: ['firstName'] },
+                    cardFields: ['title', 'description'],
+                    inlineEdit: { fields: ['title', 'description'] },
                     linkToItem: true,
                     inlineConnect: true,
-                    inlineCreate: { fields: ['firstName'] },
+                    inlineCreate: { fields: ['title', 'description'] },
                 },
             }),
         },
@@ -86,8 +162,22 @@ export const lists: Lists = {
         access: allowAll,
 
         fields: {
-            firstName: text(),
+            title: text(),
+            description: text(),
             posts: relationship({ ref: 'Post.tags', many: true }),
+        },
+    }),
+
+    Story: list({
+        access: allowAll,
+        fields: {
+            author: relationship({ ref: 'User.stories' }),
+
+            mediaUrl: text(),
+            title: text({ validation: { isRequired: true } }),
+            description: text(),
+
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
         },
     }),
 };
