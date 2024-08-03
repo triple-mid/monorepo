@@ -70,6 +70,7 @@ export const lists: Lists = {
             firstName: text(),
             lastName: text(),
             middleName: text(),
+            bio: text(),
             birth: calendarDay(),
 
             photo: image({ storage: 'images' }),
