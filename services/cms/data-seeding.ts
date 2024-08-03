@@ -28,14 +28,13 @@ const user = {
   const achievement = {
     title: "Лучший строитель года",
     description: "Награда за выдающиеся достижения в строительстве.",
-    profileId: "profile_1"
+    profile: "profile_1"
   };
   
   const document = {
     title: "Проектное предложение",
     content: "Описание проекта и его деталей.",
     createdAt: "2023-10-01T00:00:00Z",
-    ownerId: "user_1"
   };
   
   const organization = {
@@ -51,11 +50,7 @@ const user = {
   
   const jobVacancy = {
     title: "Прораб",
-    cover_id: null,
-    cover_filesize: null,
-    cover_width: null,
-    cover_height: null,
-    cover_extension: null,
+    cover: null,
     priceFrom: "50000",
     priceTo: "70000",
     place: "г. Краснодар",
@@ -63,13 +58,11 @@ const user = {
     dateTo: "2024-01-01",
     requireSelfEmployment: false,
     summary: "Требуется прораб на строительство жилого комплекса.",
-    content: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"Полное описание вакансии.\"}]}]",
-    organisationId: "organization_1",
+    content: "Контент",
     createdAt: "2023-10-01T00:00:00Z"
   };
   
   const cv = {
-    userId: "user_1",
     title: "Резюме строителя",
     priceFrom: "50000",
     priceTo: "70000",
@@ -77,22 +70,19 @@ const user = {
     dateFrom: "2023-11-01",
     dateTo: "2024-01-01",
     summary: "Опытный строитель с многолетним стажем.",
-    content: "[{\"type\":\"paragraph\",\"children\":[{\"text\":\"Описание опыта работы и навыков.\"}]}]",
+    content: "Контент",
     createdAt: "2023-10-01T00:00:00Z"
   };
   
   const skill = {
     title: "Кладка кирпича",
     description: "Навык кладки кирпича различных видов.",
-    cvs: ["cv_1"],
-    jobVacancies: ["jobVacancy_1"]
   };
   
   const post = {
     title: "Строительный блог",
     content: "Полезные советы и новости от строителей.",
     createdAt: "2023-10-01T00:00:00Z",
-    authorId: "user_1"
   };
 
 
@@ -112,7 +102,7 @@ async function main() {
     const userId = persistedUser.id;
 
     console.log('👩 Adding entity...#2');
-    await context.db.UserProfile.createOne({
+    const persistedUserProfile = (await context.db.UserProfile.createOne({
         data: {
             ...userProfile,
             user: {
@@ -121,42 +111,93 @@ async function main() {
                 },
             },
         },
+    }));
+    const userProfileId = persistedUserProfile.id;
+
+    console.log('👩 Adding entity...#3');
+    const persistedAchievement = await context.db.Achievement.createOne({
+        data: {
+            ...achievement,
+            profile: {
+                connect: {
+                    id: userProfileId,
+                },
+            },
+        },
+    });
+    const achievementId = persistedAchievement.id;
+
+    console.log('👩 Adding entity...#4');
+    const persistedDocument = await context.db.Document.createOne({
+        data: {
+            ...document,
+            owner: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+    const documentId = persistedDocument.id;
+
+    console.log('👩 Adding entity...#5');
+    const persistedOrganization = await context.db.Organization.createOne({
+        data: organization,
+    });
+    const organizationId = persistedOrganization.id;
+
+    console.log('👩 Adding entity...#6');
+    const persistedJobVacancy = await context.db.JobVacancy.createOne({
+        data: {
+            ...jobVacancy,
+            organisation: {
+                connect: {
+                    id: organizationId,
+                },
+            }
+        },
+    });
+    const jobVacancyId = persistedJobVacancy.id;
+
+    console.log('👩 Adding entity...#7');
+    const persistedCV = await context.db.CV.createOne({
+        data: {
+            ...cv,
+            user: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+    const cvId = persistedCV.id;
+
+    console.log('👩 Adding entity...#8');
+    const persistedSkill = await context.db.Skill.createOne({
+        data: {
+            ...skill,
+            cvs: {
+                connect: [{ id: cvId }],
+            },
+            jobVacancies: {
+                connect: [{ id: jobVacancyId }],
+            },
+        },
+    });
+    const skillId = persistedSkill.id;
+
+    console.log('👩 Adding entity...#9');
+    await context.db.Post.createOne({
+        data: {
+            ...post,
+            author: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
     });
 
-    // console.log('👩 Adding entity...#3');
-    // await context.db.Achievement.createOne({
-    //     data: achievement,
-    // });
-
-    // console.log('👩 Adding entity...#4');
-    // await context.db.Document.createOne({
-    //     data: document,
-    // });
-
-    // console.log('👩 Adding entity...#5');
-    // await context.db.Organization.createOne({
-    //     data: organization,
-    // });
-
-    // console.log('👩 Adding entity...#6');
-    // await context.db.JobVacancy.createOne({
-    //     data: jobVacancy,
-    // });
-
-    // console.log('👩 Adding entity...#7');
-    // await context.db.CV.createOne({
-    //     data: cv,
-    // });
-
-    // console.log('👩 Adding entity...#8');
-    // await context.db.Skill.createOne({
-    //     data: skill,
-    // });
-
-    // console.log('👩 Adding entity...#9');
-    // await context.db.Post.createOne({
-    //     data: post,
-    // });
     console.log(`\n Finished!\n`);
 };
 

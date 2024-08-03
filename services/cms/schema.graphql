@@ -588,15 +588,11 @@ type JobVacancy {
   dateTo: CalendarDay
   requireSelfEmployment: Boolean
   summary: String
-  content: JobVacancy_content_Document
+  content: String
   organisation: Organization
   skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
   skillsCount(where: SkillWhereInput! = {}): Int
   createdAt: DateTime
-}
-
-type JobVacancy_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input JobVacancyWhereUniqueInput {
@@ -616,6 +612,7 @@ input JobVacancyWhereInput {
   dateTo: CalendarDayNullableFilter
   requireSelfEmployment: BooleanFilter
   summary: StringFilter
+  content: StringFilter
   organisation: OrganizationWhereInput
   skills: SkillManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -642,6 +639,7 @@ input JobVacancyOrderByInput {
   dateTo: OrderDirection
   requireSelfEmployment: OrderDirection
   summary: OrderDirection
+  content: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -655,7 +653,7 @@ input JobVacancyUpdateInput {
   dateTo: CalendarDay
   requireSelfEmployment: Boolean
   summary: String
-  content: JSON
+  content: String
   organisation: OrganizationRelateToOneForUpdateInput
   skills: SkillRelateToManyForUpdateInput
   createdAt: DateTime
@@ -689,7 +687,7 @@ input JobVacancyCreateInput {
   dateTo: CalendarDay
   requireSelfEmployment: Boolean
   summary: String
-  content: JSON
+  content: String
   organisation: OrganizationRelateToOneForCreateInput
   skills: SkillRelateToManyForCreateInput
   createdAt: DateTime
@@ -715,14 +713,10 @@ type CV {
   dateFrom: CalendarDay
   dateTo: CalendarDay
   summary: String
-  content: CV_content_Document
+  content: String
   skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
   skillsCount(where: SkillWhereInput! = {}): Int
   createdAt: DateTime
-}
-
-type CV_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input CVWhereUniqueInput {
@@ -742,6 +736,7 @@ input CVWhereInput {
   dateFrom: CalendarDayNullableFilter
   dateTo: CalendarDayNullableFilter
   summary: StringFilter
+  content: StringFilter
   skills: SkillManyRelationFilter
   createdAt: DateTimeNullableFilter
 }
@@ -755,6 +750,7 @@ input CVOrderByInput {
   dateFrom: OrderDirection
   dateTo: OrderDirection
   summary: OrderDirection
+  content: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -767,7 +763,7 @@ input CVUpdateInput {
   dateFrom: CalendarDay
   dateTo: CalendarDay
   summary: String
-  content: JSON
+  content: String
   skills: SkillRelateToManyForUpdateInput
   createdAt: DateTime
 }
@@ -786,7 +782,7 @@ input CVCreateInput {
   dateFrom: CalendarDay
   dateTo: CalendarDay
   summary: String
-  content: JSON
+  content: String
   skills: SkillRelateToManyForCreateInput
   createdAt: DateTime
 }
@@ -844,15 +840,11 @@ input SkillCreateInput {
 type Post {
   id: ID!
   title: String
-  content: Post_content_Document
+  content: String
   author: User
   createdAt: DateTime
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
-}
-
-type Post_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input PostWhereUniqueInput {
@@ -865,6 +857,7 @@ input PostWhereInput {
   NOT: [PostWhereInput!]
   id: IDFilter
   title: StringFilter
+  content: StringFilter
   author: UserWhereInput
   createdAt: DateTimeNullableFilter
   tags: TagManyRelationFilter
@@ -879,12 +872,13 @@ input TagManyRelationFilter {
 input PostOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  content: OrderDirection
   createdAt: OrderDirection
 }
 
 input PostUpdateInput {
   title: String
-  content: JSON
+  content: String
   author: UserRelateToOneForUpdateInput
   createdAt: DateTime
   tags: TagRelateToManyForUpdateInput
@@ -904,7 +898,7 @@ input PostUpdateArgs {
 
 input PostCreateInput {
   title: String
-  content: JSON
+  content: String
   author: UserRelateToOneForCreateInput
   createdAt: DateTime
   tags: TagRelateToManyForCreateInput

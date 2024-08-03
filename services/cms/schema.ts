@@ -194,18 +194,7 @@ export const lists: Lists = {
             requireSelfEmployment: checkbox(),
 
             summary: text(),
-            content: document({
-                formatting: true,
-                layouts: [
-                    [1, 1],
-                    [1, 1, 1],
-                    [2, 1],
-                    [1, 2],
-                    [1, 2, 1],
-                ],
-                links: true,
-                dividers: true,
-            }),
+            content: text(),
 
             organisation: relationship({
                 ref: 'Organization.jobVacancies',
@@ -238,18 +227,7 @@ export const lists: Lists = {
             dateTo: calendarDay(),
 
             summary: text(),
-            content: document({
-                formatting: true,
-                layouts: [
-                    [1, 1],
-                    [1, 1, 1],
-                    [2, 1],
-                    [1, 2],
-                    [1, 2, 1],
-                ],
-                links: true,
-                dividers: true,
-            }),
+            content: text(),
             skills: relationship({
                 ref: 'Skill.cvs',
                 many: true,
@@ -279,18 +257,7 @@ export const lists: Lists = {
 
         fields: {
             title: text({ validation: { isRequired: true } }),
-            content: document({
-                formatting: true,
-                layouts: [
-                    [1, 1],
-                    [1, 1, 1],
-                    [2, 1],
-                    [1, 2],
-                    [1, 2, 1],
-                ],
-                links: true,
-                dividers: true,
-            }),
+            content: text(),
             author: relationship({
                 ref: 'User.posts',
 
