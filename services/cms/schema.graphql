@@ -236,7 +236,7 @@ type UserProfile {
   lastName: String
   middleName: String
   birth: CalendarDay
-  photoUrl: ImageFieldOutput
+  photo: ImageFieldOutput
   starsCount: Int
   reviewsCount: Int
   competitionLevel: Int
@@ -330,7 +330,7 @@ input UserProfileUpdateInput {
   lastName: String
   middleName: String
   birth: CalendarDay
-  photoUrl: ImageFieldInput
+  photo: ImageFieldInput
   starsCount: Int
   reviewsCount: Int
   competitionLevel: Int
@@ -369,7 +369,7 @@ input UserProfileCreateInput {
   lastName: String
   middleName: String
   birth: CalendarDay
-  photoUrl: ImageFieldInput
+  photo: ImageFieldInput
   starsCount: Int
   reviewsCount: Int
   competitionLevel: Int
@@ -486,6 +486,8 @@ type Organization {
   address: String
   inn: String
   ogrn: String
+  starsCount: Int
+  reviewsCount: Int
   jobVacancies(where: JobVacancyWhereInput! = {}, orderBy: [JobVacancyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JobVacancyWhereUniqueInput): [JobVacancy!]
   jobVacanciesCount(where: JobVacancyWhereInput! = {}): Int
   createdAt: DateTime
@@ -505,6 +507,8 @@ input OrganizationWhereInput {
   address: StringFilter
   inn: StringFilter
   ogrn: StringFilter
+  starsCount: IntNullableFilter
+  reviewsCount: IntNullableFilter
   jobVacancies: JobVacancyManyRelationFilter
   createdAt: DateTimeNullableFilter
 }
@@ -522,6 +526,8 @@ input OrganizationOrderByInput {
   address: OrderDirection
   inn: OrderDirection
   ogrn: OrderDirection
+  starsCount: OrderDirection
+  reviewsCount: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -531,6 +537,8 @@ input OrganizationUpdateInput {
   address: String
   inn: String
   ogrn: String
+  starsCount: Int
+  reviewsCount: Int
   jobVacancies: JobVacancyRelateToManyForUpdateInput
   createdAt: DateTime
 }
@@ -553,6 +561,8 @@ input OrganizationCreateInput {
   address: String
   inn: String
   ogrn: String
+  starsCount: Int
+  reviewsCount: Int
   jobVacancies: JobVacancyRelateToManyForCreateInput
   createdAt: DateTime
 }
@@ -565,9 +575,9 @@ input JobVacancyRelateToManyForCreateInput {
 type JobVacancy {
   id: ID!
   title: String
+  cover: ImageFieldOutput
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -596,7 +606,6 @@ input JobVacancyWhereInput {
   title: StringFilter
   priceFrom: StringFilter
   priceTo: StringFilter
-  priceExact: StringFilter
   place: StringFilter
   dateFrom: CalendarDayNullableFilter
   dateTo: CalendarDayNullableFilter
@@ -623,7 +632,6 @@ input JobVacancyOrderByInput {
   title: OrderDirection
   priceFrom: OrderDirection
   priceTo: OrderDirection
-  priceExact: OrderDirection
   place: OrderDirection
   dateFrom: OrderDirection
   dateTo: OrderDirection
@@ -634,9 +642,9 @@ input JobVacancyOrderByInput {
 
 input JobVacancyUpdateInput {
   title: String
+  cover: ImageFieldInput
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -668,9 +676,9 @@ input JobVacancyUpdateArgs {
 
 input JobVacancyCreateInput {
   title: String
+  cover: ImageFieldInput
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -698,7 +706,6 @@ type CV {
   title: String
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -726,7 +733,6 @@ input CVWhereInput {
   title: StringFilter
   priceFrom: StringFilter
   priceTo: StringFilter
-  priceExact: StringFilter
   place: StringFilter
   dateFrom: CalendarDayNullableFilter
   dateTo: CalendarDayNullableFilter
@@ -740,7 +746,6 @@ input CVOrderByInput {
   title: OrderDirection
   priceFrom: OrderDirection
   priceTo: OrderDirection
-  priceExact: OrderDirection
   place: OrderDirection
   dateFrom: OrderDirection
   dateTo: OrderDirection
@@ -753,7 +758,6 @@ input CVUpdateInput {
   title: String
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -773,7 +777,6 @@ input CVCreateInput {
   title: String
   priceFrom: String
   priceTo: String
-  priceExact: String
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
@@ -955,7 +958,7 @@ input TagCreateInput {
 type Story {
   id: ID!
   author: User
-  thumbUrl: ImageFieldOutput
+  thumb: ImageFieldOutput
   mediaUrl: String
   title: String
   description: String
@@ -988,7 +991,7 @@ input StoryOrderByInput {
 
 input StoryUpdateInput {
   author: UserRelateToOneForUpdateInput
-  thumbUrl: ImageFieldInput
+  thumb: ImageFieldInput
   mediaUrl: String
   title: String
   description: String
@@ -1002,7 +1005,7 @@ input StoryUpdateArgs {
 
 input StoryCreateInput {
   author: UserRelateToOneForCreateInput
-  thumbUrl: ImageFieldInput
+  thumb: ImageFieldInput
   mediaUrl: String
   title: String
   description: String

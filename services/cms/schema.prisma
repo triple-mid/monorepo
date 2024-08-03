@@ -28,22 +28,22 @@ model User {
 }
 
 model UserProfile {
-  id                 String        @id @default(cuid())
-  firstName          String        @default("")
-  lastName           String        @default("")
-  middleName         String        @default("")
-  birth              String?
-  photoUrl_id        String?
-  photoUrl_filesize  Int?
-  photoUrl_width     Int?
-  photoUrl_height    Int?
-  photoUrl_extension String?
-  starsCount         Int?
-  reviewsCount       Int?
-  competitionLevel   Int?
-  competitionPoints  Int?
-  user               User?         @relation("User_profile")
-  achievements       Achievement[] @relation("Achievement_profile")
+  id                String        @id @default(cuid())
+  firstName         String        @default("")
+  lastName          String        @default("")
+  middleName        String        @default("")
+  birth             String?
+  photo_id          String?
+  photo_filesize    Int?
+  photo_width       Int?
+  photo_height      Int?
+  photo_extension   String?
+  starsCount        Int?
+  reviewsCount      Int?
+  competitionLevel  Int?
+  competitionPoints Int?
+  user              User?         @relation("User_profile")
+  achievements      Achievement[] @relation("Achievement_profile")
 }
 
 model Achievement {
@@ -74,6 +74,8 @@ model Organization {
   address      String       @default("")
   inn          String       @default("")
   ogrn         String       @default("")
+  starsCount   Int?
+  reviewsCount Int?
   jobVacancies JobVacancy[] @relation("JobVacancy_organisation")
   createdAt    DateTime?    @default(now())
 }
@@ -81,9 +83,13 @@ model Organization {
 model JobVacancy {
   id                    String        @id @default(cuid())
   title                 String        @default("")
+  cover_id              String?
+  cover_filesize        Int?
+  cover_width           Int?
+  cover_height          Int?
+  cover_extension       String?
   priceFrom             String        @default("")
   priceTo               String        @default("")
-  priceExact            String        @default("")
   place                 String        @default("")
   dateFrom              String?
   dateTo                String?
@@ -99,20 +105,19 @@ model JobVacancy {
 }
 
 model CV {
-  id         String    @id @default(cuid())
-  user       User?     @relation("CV_user", fields: [userId], references: [id])
-  userId     String?   @map("user")
-  title      String    @default("")
-  priceFrom  String    @default("")
-  priceTo    String    @default("")
-  priceExact String    @default("")
-  place      String    @default("")
-  dateFrom   String?
-  dateTo     String?
-  summary    String    @default("")
-  content    String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  skills     Skill[]   @relation("CV_skills")
-  createdAt  DateTime? @default(now())
+  id        String    @id @default(cuid())
+  user      User?     @relation("CV_user", fields: [userId], references: [id])
+  userId    String?   @map("user")
+  title     String    @default("")
+  priceFrom String    @default("")
+  priceTo   String    @default("")
+  place     String    @default("")
+  dateFrom  String?
+  dateTo    String?
+  summary   String    @default("")
+  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  skills    Skill[]   @relation("CV_skills")
+  createdAt DateTime? @default(now())
 
   @@index([userId])
 }
@@ -145,18 +150,18 @@ model Tag {
 }
 
 model Story {
-  id                 String    @id @default(cuid())
-  author             User?     @relation("Story_author", fields: [authorId], references: [id])
-  authorId           String?   @map("author")
-  thumbUrl_id        String?
-  thumbUrl_filesize  Int?
-  thumbUrl_width     Int?
-  thumbUrl_height    Int?
-  thumbUrl_extension String?
-  mediaUrl           String    @default("")
-  title              String    @default("")
-  description        String    @default("")
-  createdAt          DateTime? @default(now())
+  id              String    @id @default(cuid())
+  author          User?     @relation("Story_author", fields: [authorId], references: [id])
+  authorId        String?   @map("author")
+  thumb_id        String?
+  thumb_filesize  Int?
+  thumb_width     Int?
+  thumb_height    Int?
+  thumb_extension String?
+  mediaUrl        String    @default("")
+  title           String    @default("")
+  description     String    @default("")
+  createdAt       DateTime? @default(now())
 
   @@index([authorId])
 }
