@@ -1,6 +1,6 @@
-import { Affix, Avatar, Group, Title } from '@mantine/core';
+import { Affix, Avatar, Group, Menu, Title } from '@mantine/core';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 function findLongestSubstringValue<T>(
     lookup: Record<string, T>,
@@ -26,10 +26,13 @@ const lookup: Record<string, string> = {
     '/cv': 'Резюме',
 };
 
-export type HeaderProps = {};
-
-export const Header = (props: HeaderProps) => {
+export const Header = () => {
     const selected = usePathname();
+    const router = useRouter();
+
+    const handleLogout = () => {
+        router.push('/auth');
+    };
 
     const title = findLongestSubstringValue(lookup, selected);
 
@@ -52,7 +55,14 @@ export const Header = (props: HeaderProps) => {
                     </Title>
                 )}
 
-                <Avatar />
+                <Menu>
+                    <Menu.Target>
+                        <Avatar />
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item onClick={handleLogout}>Выход</Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
             </Group>
         </Affix>
     );

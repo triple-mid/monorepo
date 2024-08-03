@@ -1,4 +1,5 @@
-import { Group, Paper, Stack, Title } from '@mantine/core';
+import { Drawer, Group, Paper, Stack, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 import { IconDocument } from '~/shared/icons';
 
@@ -7,6 +8,8 @@ import { InfoIcon } from '~/shared/ui/InfoIcon';
 import { PriceFork, type PriceForkProps } from '~/shared/ui/PriceFork';
 import { Skillset, type SkillsetProps } from '~/shared/ui/Skillset';
 import { TimeAndPlace, type TimeAndPlaceProps } from '~/shared/ui/TimeAndPlace';
+
+import { CvEditor } from './CvEditor';
 
 export type CvCardProps = SkillsetProps &
     PriceForkProps &
@@ -18,28 +21,42 @@ export const CvCard = (props: CvCardProps) => {
     const { priceFrom, priceTo, place, dateFrom, dateTo, title, skills } =
         props;
 
+    const [opened, { open, close }] = useDisclosure(false);
+
     return (
-        <Paper>
-            <Stack>
-                <Group justify="space-between">
-                    <InfoIcon icon={IconDocument} color="#479DBA" />
-                    <EditButton />
-                </Group>
+        <>
+            <Drawer
+                opened={opened}
+                onClose={close}
+                title={<Title>Резюме</Title>}
+                position="bottom"
+                size="fit-content"
+            >
+                <CvEditor />
+            </Drawer>
 
-                <Title order={3}>{title}</Title>
+            <Paper>
+                <Stack>
+                    <Group justify="space-between">
+                        <InfoIcon icon={IconDocument} color="#479DBA" />
+                        <EditButton onClick={open} />
+                    </Group>
 
-                {(priceFrom || priceTo) && (
-                    <PriceFork priceFrom={priceFrom} priceTo={priceTo} />
-                )}
-                {(place || dateTo || dateFrom) && (
-                    <TimeAndPlace
-                        place={place}
-                        dateFrom={dateFrom}
-                        dateTo={dateTo}
-                    />
-                )}
-                {skills && <Skillset skills={skills} max={3} />}
-            </Stack>
-        </Paper>
+                    <Title order={3}>{title}</Title>
+
+                    {(priceFrom || priceTo) && (
+                        <PriceFork priceFrom={priceFrom} priceTo={priceTo} />
+                    )}
+                    {(place || dateTo || dateFrom) && (
+                        <TimeAndPlace
+                            place={place}
+                            dateFrom={dateFrom}
+                            dateTo={dateTo}
+                        />
+                    )}
+                    {skills && <Skillset skills={skills} max={3} />}
+                </Stack>
+            </Paper>
+        </>
     );
 };

@@ -7,7 +7,9 @@ import {
     Paper,
     PinInput,
     SegmentedControl,
+    Select,
     TextInput,
+    Textarea,
     createTheme,
 } from '@mantine/core';
 import { themeToVars } from '@mantine/vanilla-extract';
@@ -26,6 +28,18 @@ export const DEFAULT_THEME = createTheme({
             },
         }),
         TextInput: TextInput.extend({
+            defaultProps: {
+                radius: 'lg',
+                size: 'lg',
+            },
+        }),
+        Textarea: Textarea.extend({
+            defaultProps: {
+                radius: 'lg',
+                size: 'lg',
+            },
+        }),
+        Select: Select.extend({
             defaultProps: {
                 radius: 'lg',
                 size: 'lg',

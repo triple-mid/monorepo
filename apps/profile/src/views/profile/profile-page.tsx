@@ -5,11 +5,11 @@ import { useQuery } from '@apollo/client';
 import { gql } from '~/shared/api';
 
 import { MainLayout } from '~/shared/layout/MainLayout';
+import { InfoBanner } from '~/shared/ui/InfoBanner';
 import { CVSection } from './ui/CVSection';
 import { DocumentsSection } from './ui/DocumentsSection';
 import { ProfileInfo } from './ui/ProfileInfo';
 import { StoriesSection } from './ui/StoriesSection';
-import { UncompletedCheckBanner } from './ui/UncompletedCheckBanner';
 
 const SELF = gql(/* GraphQL */ `
     query GetSelf($where: UserWhereUniqueInput!) {
@@ -39,7 +39,12 @@ export const ProfilePage = () => {
         <MainLayout>
             <StoriesSection />
             <ProfileInfo />
-            <UncompletedCheckBanner />
+            <InfoBanner
+                title="Вы еще не завершили проверку"
+                description={
+                    'Завершите проверку. После откроется доступ к более интересным предложениям и ваш рейтинг повысится.'
+                }
+            />
             <CVSection />
             <DocumentsSection />
         </MainLayout>

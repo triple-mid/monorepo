@@ -30,6 +30,7 @@ export default function RootLayout(props: RootLayoutProps) {
                     name="viewport"
                     content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
                 />
+                <link rel="manifest" href="/manifest.json" />
             </head>
             <body>
                 <RootProvider>{children}</RootProvider>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Group, Paper, Stack } from '@mantine/core';
+import { Button, Stack } from '@mantine/core';
 
 import { MainLayout } from '~/shared/layout/MainLayout';
 import { CvCard, type CvCardProps } from '~/views/cv/ui/CvCard';
