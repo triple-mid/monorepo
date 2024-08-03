@@ -16,6 +16,8 @@ type User {
   postsCount(where: PostWhereInput! = {}): Int
   stories(where: StoryWhereInput! = {}, orderBy: [StoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StoryWhereUniqueInput): [Story!]
   storiesCount(where: StoryWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -45,6 +47,7 @@ input UserWhereInput {
   cvs: CVManyRelationFilter
   posts: PostManyRelationFilter
   stories: StoryManyRelationFilter
+  documents: DocumentManyRelationFilter
 }
 
 input IDFilter {
@@ -115,6 +118,12 @@ input StoryManyRelationFilter {
   none: StoryWhereInput
 }
 
+input DocumentManyRelationFilter {
+  every: DocumentWhereInput
+  some: DocumentWhereInput
+  none: DocumentWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   username: OrderDirection
@@ -140,6 +149,7 @@ input UserUpdateInput {
   cvs: CVRelateToManyForUpdateInput
   posts: PostRelateToManyForUpdateInput
   stories: StoryRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
 }
 
 input UserProfileRelateToOneForUpdateInput {
@@ -169,6 +179,13 @@ input StoryRelateToManyForUpdateInput {
   connect: [StoryWhereUniqueInput!]
 }
 
+input DocumentRelateToManyForUpdateInput {
+  disconnect: [DocumentWhereUniqueInput!]
+  set: [DocumentWhereUniqueInput!]
+  create: [DocumentCreateInput!]
+  connect: [DocumentWhereUniqueInput!]
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -185,6 +202,7 @@ input UserCreateInput {
   cvs: CVRelateToManyForCreateInput
   posts: PostRelateToManyForCreateInput
   stories: StoryRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
 }
 
 input UserProfileRelateToOneForCreateInput {
@@ -207,13 +225,43 @@ input StoryRelateToManyForCreateInput {
   connect: [StoryWhereUniqueInput!]
 }
 
+input DocumentRelateToManyForCreateInput {
+  create: [DocumentCreateInput!]
+  connect: [DocumentWhereUniqueInput!]
+}
+
 type UserProfile {
   id: ID!
   firstName: String
   lastName: String
   middleName: String
-  dateOfBirth: String
+  birth: CalendarDay
+  photoUrl: ImageFieldOutput
+  starsCount: Int
+  reviewsCount: Int
+  competitionLevel: Int
+  competitionPoints: Int
   user: User
+  achievements(where: AchievementWhereInput! = {}, orderBy: [AchievementOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AchievementWhereUniqueInput): [Achievement!]
+  achievementsCount(where: AchievementWhereInput! = {}): Int
+}
+
+scalar CalendarDay @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+type ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
 }
 
 input UserProfileWhereUniqueInput {
@@ -228,8 +276,41 @@ input UserProfileWhereInput {
   firstName: StringFilter
   lastName: StringFilter
   middleName: StringFilter
-  dateOfBirth: StringFilter
+  birth: CalendarDayNullableFilter
+  starsCount: IntNullableFilter
+  reviewsCount: IntNullableFilter
+  competitionLevel: IntNullableFilter
+  competitionPoints: IntNullableFilter
   user: UserWhereInput
+  achievements: AchievementManyRelationFilter
+}
+
+input CalendarDayNullableFilter {
+  equals: CalendarDay
+  in: [CalendarDay!]
+  notIn: [CalendarDay!]
+  lt: CalendarDay
+  lte: CalendarDay
+  gt: CalendarDay
+  gte: CalendarDay
+  not: CalendarDayNullableFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input AchievementManyRelationFilter {
+  every: AchievementWhereInput
+  some: AchievementWhereInput
+  none: AchievementWhereInput
 }
 
 input UserProfileOrderByInput {
@@ -237,21 +318,45 @@ input UserProfileOrderByInput {
   firstName: OrderDirection
   lastName: OrderDirection
   middleName: OrderDirection
-  dateOfBirth: OrderDirection
+  birth: OrderDirection
+  starsCount: OrderDirection
+  reviewsCount: OrderDirection
+  competitionLevel: OrderDirection
+  competitionPoints: OrderDirection
 }
 
 input UserProfileUpdateInput {
   firstName: String
   lastName: String
   middleName: String
-  dateOfBirth: String
+  birth: CalendarDay
+  photoUrl: ImageFieldInput
+  starsCount: Int
+  reviewsCount: Int
+  competitionLevel: Int
+  competitionPoints: Int
   user: UserRelateToOneForUpdateInput
+  achievements: AchievementRelateToManyForUpdateInput
 }
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input UserRelateToOneForUpdateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
   disconnect: Boolean
+}
+
+input AchievementRelateToManyForUpdateInput {
+  disconnect: [AchievementWhereUniqueInput!]
+  set: [AchievementWhereUniqueInput!]
+  create: [AchievementCreateInput!]
+  connect: [AchievementWhereUniqueInput!]
 }
 
 input UserProfileUpdateArgs {
@@ -263,8 +368,14 @@ input UserProfileCreateInput {
   firstName: String
   lastName: String
   middleName: String
-  dateOfBirth: String
+  birth: CalendarDay
+  photoUrl: ImageFieldInput
+  starsCount: Int
+  reviewsCount: Int
+  competitionLevel: Int
+  competitionPoints: Int
   user: UserRelateToOneForCreateInput
+  achievements: AchievementRelateToManyForCreateInput
 }
 
 input UserRelateToOneForCreateInput {
@@ -272,10 +383,110 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
+input AchievementRelateToManyForCreateInput {
+  create: [AchievementCreateInput!]
+  connect: [AchievementWhereUniqueInput!]
+}
+
+type Achievement {
+  id: ID!
+  title: String
+  description: String
+  profile: UserProfile
+}
+
+input AchievementWhereUniqueInput {
+  id: ID
+}
+
+input AchievementWhereInput {
+  AND: [AchievementWhereInput!]
+  OR: [AchievementWhereInput!]
+  NOT: [AchievementWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  profile: UserProfileWhereInput
+}
+
+input AchievementOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+}
+
+input AchievementUpdateInput {
+  title: String
+  description: String
+  profile: UserProfileRelateToOneForUpdateInput
+}
+
+input AchievementUpdateArgs {
+  where: AchievementWhereUniqueInput!
+  data: AchievementUpdateInput!
+}
+
+input AchievementCreateInput {
+  title: String
+  description: String
+  profile: UserProfileRelateToOneForCreateInput
+}
+
+type Document {
+  id: ID!
+  title: String
+  content: JSON
+  createdAt: DateTime
+  owner: User
+}
+
+input DocumentWhereUniqueInput {
+  id: ID
+}
+
+input DocumentWhereInput {
+  AND: [DocumentWhereInput!]
+  OR: [DocumentWhereInput!]
+  NOT: [DocumentWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  createdAt: DateTimeNullableFilter
+  owner: UserWhereInput
+}
+
+input DocumentOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  createdAt: OrderDirection
+}
+
+input DocumentUpdateInput {
+  title: String
+  content: JSON
+  createdAt: DateTime
+  owner: UserRelateToOneForUpdateInput
+}
+
+input DocumentUpdateArgs {
+  where: DocumentWhereUniqueInput!
+  data: DocumentUpdateInput!
+}
+
+input DocumentCreateInput {
+  title: String
+  content: JSON
+  createdAt: DateTime
+  owner: UserRelateToOneForCreateInput
+}
+
 type CV {
   id: ID!
   user: User
   title: String
+  salary: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
   summary: String
   content: CV_content_Document
   skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
@@ -298,6 +509,10 @@ input CVWhereInput {
   id: IDFilter
   user: UserWhereInput
   title: StringFilter
+  salary: StringFilter
+  place: StringFilter
+  dateFrom: CalendarDayNullableFilter
+  dateTo: CalendarDayNullableFilter
   summary: StringFilter
   skills: SkillManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -312,6 +527,10 @@ input SkillManyRelationFilter {
 input CVOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  salary: OrderDirection
+  place: OrderDirection
+  dateFrom: OrderDirection
+  dateTo: OrderDirection
   summary: OrderDirection
   createdAt: OrderDirection
 }
@@ -319,6 +538,10 @@ input CVOrderByInput {
 input CVUpdateInput {
   user: UserRelateToOneForUpdateInput
   title: String
+  salary: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
   summary: String
   content: JSON
   skills: SkillRelateToManyForUpdateInput
@@ -340,6 +563,10 @@ input CVUpdateArgs {
 input CVCreateInput {
   user: UserRelateToOneForCreateInput
   title: String
+  salary: String
+  place: String
+  dateFrom: CalendarDay
+  dateTo: CalendarDay
   summary: String
   content: JSON
   skills: SkillRelateToManyForCreateInput
@@ -587,6 +814,18 @@ type Mutation {
   updateUserProfiles(data: [UserProfileUpdateArgs!]!): [UserProfile]
   deleteUserProfile(where: UserProfileWhereUniqueInput!): UserProfile
   deleteUserProfiles(where: [UserProfileWhereUniqueInput!]!): [UserProfile]
+  createAchievement(data: AchievementCreateInput!): Achievement
+  createAchievements(data: [AchievementCreateInput!]!): [Achievement]
+  updateAchievement(where: AchievementWhereUniqueInput!, data: AchievementUpdateInput!): Achievement
+  updateAchievements(data: [AchievementUpdateArgs!]!): [Achievement]
+  deleteAchievement(where: AchievementWhereUniqueInput!): Achievement
+  deleteAchievements(where: [AchievementWhereUniqueInput!]!): [Achievement]
+  createDocument(data: DocumentCreateInput!): Document
+  createDocuments(data: [DocumentCreateInput!]!): [Document]
+  updateDocument(where: DocumentWhereUniqueInput!, data: DocumentUpdateInput!): Document
+  updateDocuments(data: [DocumentUpdateArgs!]!): [Document]
+  deleteDocument(where: DocumentWhereUniqueInput!): Document
+  deleteDocuments(where: [DocumentWhereUniqueInput!]!): [Document]
   createCV(data: CVCreateInput!): CV
   createCVS(data: [CVCreateInput!]!): [CV]
   updateCV(where: CVWhereUniqueInput!, data: CVUpdateInput!): CV
@@ -646,6 +885,12 @@ type Query {
   userProfiles(where: UserProfileWhereInput! = {}, orderBy: [UserProfileOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserProfileWhereUniqueInput): [UserProfile!]
   userProfile(where: UserProfileWhereUniqueInput!): UserProfile
   userProfilesCount(where: UserProfileWhereInput! = {}): Int
+  achievements(where: AchievementWhereInput! = {}, orderBy: [AchievementOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AchievementWhereUniqueInput): [Achievement!]
+  achievement(where: AchievementWhereUniqueInput!): Achievement
+  achievementsCount(where: AchievementWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  document(where: DocumentWhereUniqueInput!): Document
+  documentsCount(where: DocumentWhereInput! = {}): Int
   cVS(where: CVWhereInput! = {}, orderBy: [CVOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CVWhereUniqueInput): [CV!]
   cV(where: CVWhereUniqueInput!): CV
   cVSCount(where: CVWhereInput! = {}): Int

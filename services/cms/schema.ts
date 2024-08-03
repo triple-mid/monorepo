@@ -3,6 +3,9 @@ import { allowAll } from '@keystone-6/core/access';
 
 import {
     calendarDay,
+    image,
+    integer,
+    json,
     password,
     relationship,
     select,
@@ -47,6 +50,7 @@ export const lists: Lists = {
             cvs: relationship({ ref: 'CV.user', many: true }),
             posts: relationship({ ref: 'Post.author', many: true }),
             stories: relationship({ ref: 'Story.author', many: true }),
+            documents: relationship({ ref: 'Document.owner', many: true }),
         },
     }),
     UserProfile: list({
@@ -56,8 +60,72 @@ export const lists: Lists = {
             firstName: text(),
             lastName: text(),
             middleName: text(),
-            dateOfBirth: text(),
+            birth: calendarDay(),
+
+            photoUrl: image({
+                storage: 'images',
+            }),
+
+            /**
+             * Количество добавлений профиля в избранное.
+             *
+             * TODO: перерассчёт при работе с соответствующей моделью,
+             *  реализовать после добавления модели
+             * */
+            starsCount: integer(),
+            /**
+             * Количество отзывов.
+             *
+             * TODO: перерассчёт при работе с соответствующей моделью,
+             *  реализовать после добавления модели
+             * */
+            reviewsCount: integer(),
+
+            /** Уровни и поинты в рейтинговой системе */
+            competitionLevel: integer(),
+            competitionPoints: integer(),
+
             user: relationship({ ref: 'User.profile' }),
+            achievements: relationship({
+                ref: 'Achievement.profile',
+                many: true,
+            }),
+        },
+    }),
+
+    Achievement: list({
+        access: allowAll,
+
+        fields: {
+            title: text(),
+            description: text(),
+            profile: relationship({
+                ref: 'UserProfile.achievements',
+            }),
+        },
+    }),
+
+    /** Документ - слабструктурированные данные */
+    Document: list({
+        access: allowAll,
+
+        fields: {
+            title: text({ validation: { isRequired: true } }),
+
+            content: json(),
+            createdAt: timestamp({ defaultValue: { kind: 'now' } }),
+
+            owner: relationship({
+                ref: 'User.documents',
+
+                ui: {
+                    displayMode: 'cards',
+                    cardFields: ['username', 'email'],
+                    inlineEdit: { fields: ['username', 'email'] },
+                    linkToItem: true,
+                    inlineConnect: true,
+                },
+            }),
         },
     }),
 

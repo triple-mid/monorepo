@@ -23,5 +23,16 @@ export default withAuth(
                 return context.session?.data.role === 'admin' ?? false;
             },
         },
+        storage: {
+            images: {
+                kind: 'local',
+                type: 'image',
+                generateUrl: (path) => `/images/${path}`,
+                serverRoute: {
+                    path: '/images',
+                },
+                storagePath: 'public/images',
+            },
+        },
     }),
 );
