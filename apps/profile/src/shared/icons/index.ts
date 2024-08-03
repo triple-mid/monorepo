@@ -8,3 +8,7 @@ export * from './IconStar';
 export * from './IconFile';
 export * from './IconDislike';
 export * from './IconLike';
+export * from './IconEdit';
+export * from './IconDocument';
+export * from './IconStar';
+export * from './IconDate';

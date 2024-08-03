@@ -43,7 +43,7 @@ export const MainLayout = (props: MainLayoutProps) => {
     const { children } = props;
 
     return (
-        <Stack mb="30vh">
+        <Stack mt="90px" mb="30vh">
             <Header />
             {children}
             <TabNavigation data={NAVIGATION} />

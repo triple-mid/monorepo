@@ -1,9 +1,10 @@
+import { IconDocument } from '~/shared/icons';
 import { ItemLink, type ItemLinkProps } from './ItemLink';
 import { SectionCard } from './SectionCard';
 
 const MOCK: ItemLinkProps[] = [
-    { title: 'Разнорабочий', redirectTo: '/cv' },
-    { title: 'Сварщик', redirectTo: '/cv' },
+    { title: 'Разнорабочий', icon: IconDocument, redirectTo: '/cv' },
+    { title: 'Сварщик', icon: IconDocument, redirectTo: '/cv' },
 ];
 
 export const CVSection = () => {

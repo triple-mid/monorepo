@@ -1,3 +1,4 @@
+// TODO: remove from shared
 export const getDisplayedSkills = <T>(
     skills: undefined | T[],
     max: number,

@@ -15,35 +15,38 @@ import {
     IconLike,
     IconStar,
 } from '~/shared/icons';
+import {
+    PriceFork,
+    type PriceForkProps,
+} from '~/shared/ui/PriceFork/PriceFork';
+import {
+    PublicationDate,
+    type PublicationDateProps,
+} from '~/shared/ui/PublicationDate/PublicationDate';
+import { Skillset, type SkillsetProps } from '~/shared/ui/Skillset/Skillset';
 import { Tag } from '~/shared/ui/Tag';
-import { getDisplayedDate } from '~/views/feed/ui/JobVacancy/getDisplayedDate';
-import { getDisplayedSkills } from '~/views/feed/ui/JobVacancy/getDisplayedSkills';
-import { getDisplayedPrice } from './getDisplayedPrice';
-import { getDisplayedPublicationDate } from './getDisplayedPublicationDate';
+import {
+    TimeAndPlace,
+    type TimeAndPlaceProps,
+} from '~/shared/ui/TimeAndPlace/TimeAndPlace';
 
-export type JobVacancyProps = {
-    title: string;
-    cover: string;
-    priceFrom?: string;
-    priceTo?: string;
-    place?: string;
-    dateFrom?: Date;
-    dateTo?: Date;
-    requireSelfEmployment?: boolean;
-    summary?: string;
-
-    organisation?: {
+export type JobVacancyProps = SkillsetProps &
+    PriceForkProps &
+    TimeAndPlaceProps &
+    Partial<PublicationDateProps> & {
         title: string;
-        starsCount?: number;
-        reviewsCount?: number;
+        cover: string;
+        summary?: string;
+
+        organisation?: {
+            title: string;
+            starsCount?: number;
+            reviewsCount?: number;
+        };
+
+        onLike?: () => void;
+        onDislike?: () => void;
     };
-    skills?: { title: string }[];
-
-    createdAt?: Date;
-
-    onLike?: () => void;
-    onDislike?: () => void;
-};
 
 export const JobVacancy = (props: JobVacancyProps) => {
     const {
@@ -64,8 +67,6 @@ export const JobVacancy = (props: JobVacancyProps) => {
         onDislike,
     } = props;
 
-    const [displayedSkills, skillsOverflow] = getDisplayedSkills(skills, 6);
-
     return (
         <div style={{ position: 'relative' }}>
             <BackgroundImage
@@ -80,14 +81,13 @@ export const JobVacancy = (props: JobVacancyProps) => {
                     {(createdAt || priceFrom || priceTo) && (
                         <Group justify="space-between">
                             {(priceFrom || priceTo) && (
-                                <Text size="18px">
-                                    {getDisplayedPrice({ priceFrom, priceTo })}
-                                </Text>
+                                <PriceFork
+                                    priceFrom={priceFrom}
+                                    priceTo={priceTo}
+                                />
                             )}
                             {createdAt && (
-                                <Text size="13px">
-                                    {getDisplayedPublicationDate(createdAt)}
-                                </Text>
+                                <PublicationDate createdAt={createdAt} />
                             )}
                         </Group>
                     )}
@@ -116,37 +116,17 @@ export const JobVacancy = (props: JobVacancyProps) => {
                     )}
 
                     {(place || dateTo || dateFrom) && (
-                        <Stack gap={14}>
-                            {place && <Text size="16px">Очно - {place}</Text>}
-                            {(dateTo || dateFrom) && (
-                                <Text size="16px">
-                                    {getDisplayedDate({ dateFrom, dateTo })}
-                                </Text>
-                            )}
-                        </Stack>
+                        <TimeAndPlace
+                            place={place}
+                            dateFrom={dateFrom}
+                            dateTo={dateTo}
+                        />
                     )}
 
-                    <Group gap={8}>
-                        {requireSelfEmployment ? (
-                            <Chip checked color="blue" variant="light">
-                                Требуется самозанятость
-                            </Chip>
-                        ) : (
-                            <Chip checked color="blue" variant="light">
-                                Штат или самозанятость
-                            </Chip>
-                        )}
-                        {displayedSkills.map(({ title }) => (
-                            <Chip key={title} checked={false}>
-                                {title}
-                            </Chip>
-                        ))}
-                        {skillsOverflow && (
-                            <Chip key={title} checked={false}>
-                                +{skillsOverflow}
-                            </Chip>
-                        )}
-                    </Group>
+                    <Skillset
+                        requireSelfEmployment={requireSelfEmployment}
+                        skills={skills}
+                    />
 
                     <Group grow gap={10}>
                         <Button

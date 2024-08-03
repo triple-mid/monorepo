@@ -40,8 +40,8 @@ export const ProfilePage = () => {
             <StoriesSection />
             <ProfileInfo />
             <UncompletedCheckBanner />
-            <DocumentsSection />
             <CVSection />
+            <DocumentsSection />
         </MainLayout>
     );
 };
