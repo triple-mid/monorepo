@@ -4,6 +4,7 @@ import { Arimo } from 'next/font/google';
 
 import {
     Button,
+    NumberInput,
     Paper,
     PinInput,
     SegmentedControl,
@@ -29,6 +30,12 @@ export const DEFAULT_THEME = createTheme({
             },
         }),
         TextInput: TextInput.extend({
+            defaultProps: {
+                radius: 'lg',
+                size: 'lg',
+            },
+        }),
+        NumberInput: NumberInput.extend({
             defaultProps: {
                 radius: 'lg',
                 size: 'lg',

@@ -16,7 +16,7 @@ export default withAuth(
     config({
         server: {
             cors: {
-                origin: ['http://localhost:3001', 'http://localhost:3002'],
+                origin: '*',
                 credentials: true,
             },
         },

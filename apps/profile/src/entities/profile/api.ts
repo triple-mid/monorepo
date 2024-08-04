@@ -5,6 +5,7 @@ import { gql } from '~/shared/api';
 const SELF = gql(/* GraphQL */ `
     query GetSelf($where: UserWhereUniqueInput!) {
         user(where: $where) {
+            id
             profile {
                 id
                 firstName

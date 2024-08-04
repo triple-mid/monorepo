@@ -5,6 +5,7 @@ import { Skeleton } from '@mantine/core';
 import { useGetSelf } from '~/entities/profile/api';
 import { MainLayout } from '~/shared/layout/MainLayout';
 import { InfoBanner } from '~/shared/ui/InfoBanner';
+import { SelfEmpolymentBanner } from '~/views/profile/ui/SelfEmpolymentBanner';
 import { CVSection } from './ui/CVSection';
 import { DocumentsSection } from './ui/DocumentsSection';
 import { ProfileInfo } from './ui/ProfileInfo';
@@ -29,6 +30,7 @@ export const ProfilePage = () => {
             )}
             <CVSection />
             <DocumentsSection />
+            <SelfEmpolymentBanner />
         </MainLayout>
     );
 };

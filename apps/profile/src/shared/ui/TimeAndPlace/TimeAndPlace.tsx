@@ -5,7 +5,7 @@ import { IconStar } from '~/shared/icons/IconBag';
 import { getDisplayedDate } from './getDisplayedDate';
 
 export type TimeAndPlaceProps = {
-    place?: string;
+    place?: string | null | undefined;
     dateFrom?: Date;
     dateTo?: Date;
 };

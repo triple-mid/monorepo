@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
+import '@mantine/notifications/styles.css';
 
 import { ColorSchemeScript } from '@mantine/core';
 

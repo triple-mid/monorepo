@@ -107,19 +107,20 @@ model JobVacancy {
 }
 
 model CV {
-  id        String    @id @default(cuid())
-  user      User?     @relation("CV_user", fields: [userId], references: [id])
-  userId    String?   @map("user")
-  title     String    @default("")
-  priceFrom String    @default("")
-  priceTo   String    @default("")
-  place     String    @default("")
-  dateFrom  String?
-  dateTo    String?
-  summary   String    @default("")
-  content   String    @default("")
-  skills    Skill[]   @relation("CV_skills")
-  createdAt DateTime? @default(now())
+  id                    String    @id @default(cuid())
+  user                  User?     @relation("CV_user", fields: [userId], references: [id])
+  userId                String?   @map("user")
+  title                 String    @default("")
+  priceFrom             String    @default("")
+  priceTo               String    @default("")
+  place                 String    @default("")
+  dateFrom              String?
+  dateTo                String?
+  preferredRegistration String    @default("both")
+  summary               String    @default("")
+  content               String    @default("")
+  skills                Skill[]   @relation("CV_skills")
+  createdAt             DateTime? @default(now())
 
   @@index([userId])
 }

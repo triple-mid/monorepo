@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 
 import { ApolloProvider } from '@apollo/client';
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 import { DEFAULT_THEME } from './theme';
 
@@ -23,6 +24,7 @@ export const RootProvider = (props: RootProviderProps) => {
                 theme={DEFAULT_THEME}
                 defaultColorScheme={DEFAULT_COLOR_SCHEME}
             >
+                <Notifications />
                 {children}
             </MantineProvider>
         </ApolloProvider>

@@ -717,6 +717,7 @@ type CV {
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
+  preferredRegistration: String
   summary: String
   content: String
   skills(where: SkillWhereInput! = {}, orderBy: [SkillOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SkillWhereUniqueInput): [Skill!]
@@ -740,6 +741,7 @@ input CVWhereInput {
   place: StringFilter
   dateFrom: CalendarDayNullableFilter
   dateTo: CalendarDayNullableFilter
+  preferredRegistration: StringFilter
   summary: StringFilter
   content: StringFilter
   skills: SkillManyRelationFilter
@@ -754,6 +756,7 @@ input CVOrderByInput {
   place: OrderDirection
   dateFrom: OrderDirection
   dateTo: OrderDirection
+  preferredRegistration: OrderDirection
   summary: OrderDirection
   content: OrderDirection
   createdAt: OrderDirection
@@ -767,6 +770,7 @@ input CVUpdateInput {
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
+  preferredRegistration: String
   summary: String
   content: String
   skills: SkillRelateToManyForUpdateInput
@@ -786,6 +790,7 @@ input CVCreateInput {
   place: String
   dateFrom: CalendarDay
   dateTo: CalendarDay
+  preferredRegistration: String
   summary: String
   content: String
   skills: SkillRelateToManyForCreateInput

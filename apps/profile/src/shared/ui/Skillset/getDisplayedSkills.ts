@@ -1,6 +1,6 @@
 // TODO: remove from shared
 export const getDisplayedSkills = <T>(
-    skills: undefined | T[],
+    skills: null | undefined | T[],
     max: number,
 ): [T[], number] => {
     if (!skills) {

@@ -133,6 +133,7 @@ export const JobVacancy = (props: JobVacancyProps) => {
                     <Skillset
                         requireSelfEmployment={requireSelfEmployment}
                         skills={skills}
+                        withEmployment
                     />
 
                     <Group grow gap={10}>

@@ -13,6 +13,7 @@ const GetJobVacanciesFeed = gql(/* GraphQL */ `
             place
             priceFrom
             priceTo
+            requireSelfEmployment
             organisation {
                 address
                 description

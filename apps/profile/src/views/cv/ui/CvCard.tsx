@@ -1,5 +1,4 @@
-import { Drawer, Group, Paper, Stack, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Group, Paper, Stack, Title } from '@mantine/core';
 
 import { IconDocument } from '~/shared/icons';
 
@@ -9,54 +8,47 @@ import { PriceFork, type PriceForkProps } from '~/shared/ui/PriceFork';
 import { Skillset, type SkillsetProps } from '~/shared/ui/Skillset';
 import { TimeAndPlace, type TimeAndPlaceProps } from '~/shared/ui/TimeAndPlace';
 
-import { CvEditor } from './CvEditor';
-
 export type CvCardProps = SkillsetProps &
     PriceForkProps &
     TimeAndPlaceProps & {
-        title: string;
+        title?: string | null;
+        onEditClick?: () => void;
     };
 
 export const CvCard = (props: CvCardProps) => {
-    const { priceFrom, priceTo, place, dateFrom, dateTo, title, skills } =
-        props;
-
-    const [opened, { open, close }] = useDisclosure(false);
+    const {
+        priceFrom,
+        priceTo,
+        place,
+        dateFrom,
+        dateTo,
+        title,
+        skills,
+        onEditClick,
+    } = props;
 
     return (
-        <>
-            <Drawer
-                opened={opened}
-                onClose={close}
-                title={<Title>Резюме</Title>}
-                position="bottom"
-                size="fit-content"
-            >
-                <CvEditor />
-            </Drawer>
+        <Paper>
+            <Stack>
+                <Group justify="space-between">
+                    <InfoIcon icon={IconDocument} color="#479DBA" />
+                    <EditButton onClick={onEditClick} />
+                </Group>
 
-            <Paper>
-                <Stack>
-                    <Group justify="space-between">
-                        <InfoIcon icon={IconDocument} color="#479DBA" />
-                        <EditButton onClick={open} />
-                    </Group>
+                <Title order={3}>{title}</Title>
 
-                    <Title order={3}>{title}</Title>
-
-                    {(priceFrom || priceTo) && (
-                        <PriceFork priceFrom={priceFrom} priceTo={priceTo} />
-                    )}
-                    {(place || dateTo || dateFrom) && (
-                        <TimeAndPlace
-                            place={place}
-                            dateFrom={dateFrom}
-                            dateTo={dateTo}
-                        />
-                    )}
-                    {skills && <Skillset skills={skills} max={3} />}
-                </Stack>
-            </Paper>
-        </>
+                {(priceFrom || priceTo) && (
+                    <PriceFork priceFrom={priceFrom} priceTo={priceTo} />
+                )}
+                {(place || dateTo || dateFrom) && (
+                    <TimeAndPlace
+                        place={place}
+                        dateFrom={dateFrom}
+                        dateTo={dateTo}
+                    />
+                )}
+                {skills && <Skillset skills={skills} max={3} />}
+            </Stack>
+        </Paper>
     );
 };

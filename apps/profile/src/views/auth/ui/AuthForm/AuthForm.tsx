@@ -3,7 +3,16 @@
 import { useRouter } from 'next/navigation';
 import { type FormEventHandler, useState } from 'react';
 
-import { Button, Chip, Group, Select, Text, Title } from '@mantine/core';
+import {
+    Button,
+    Center,
+    Chip,
+    Group,
+    ScrollArea,
+    Select,
+    Text,
+    Title,
+} from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
 
 import { Carousel, type Embla } from '@mantine/carousel';
@@ -11,6 +20,7 @@ import { Carousel, type Embla } from '@mantine/carousel';
 import { useGetSkills } from '~/entities/skills/api';
 import { SUPPORTED_CITIES } from '~/shared/configs';
 import { MOCK_WORK_OPTIONS } from '~/shared/mocks';
+import { Logo } from '~/views/auth/ui';
 import { AuthStepLayout } from './AuthStepLayout';
 import { AuthStepPhoneNumber } from './AuthStepPhoneNumber';
 import { AuthStepPin } from './AuthStepPin';
@@ -27,7 +37,7 @@ const MOCK_EXPERIENCE = [
 
 // @MOCK_IMPL
 export const AuthForm = () => {
-    const { data: skills, loading: skillsLoading } = useGetSkills();
+    const { data: skills } = useGetSkills();
 
     const router = useRouter();
 
@@ -79,17 +89,19 @@ export const AuthForm = () => {
                     <Title order={4}>Какую работу выполняете?</Title>
                     <Text>Выберите минимум 3 варианта</Text>
 
-                    {skills?.skills && (
-                        <Chip.Group multiple>
-                            <Group gap={8}>
-                                {skills.skills.map(({ title, id }) => (
-                                    <Chip key={id} value={id} size="md">
-                                        {title}
-                                    </Chip>
-                                ))}
-                            </Group>
-                        </Chip.Group>
-                    )}
+                    <ScrollArea>
+                        {skills?.skills && (
+                            <Chip.Group multiple>
+                                <Group gap={8} mah="60vh">
+                                    {skills.skills.map(({ title, id }) => (
+                                        <Chip key={id} value={id} size="md">
+                                            {title}
+                                        </Chip>
+                                    ))}
+                                </Group>
+                            </Chip.Group>
+                        )}
+                    </ScrollArea>
 
                     <Button
                         color="#2B2A29"
@@ -184,6 +196,11 @@ export const AuthForm = () => {
 
     return (
         <>
+            {activeStep !== 'profile' && (
+                <Center pb={64}>
+                    <Logo />
+                </Center>
+            )}
             {activeStep === 'phone' && (
                 <AuthStepPhoneNumber
                     handleNumberSubmit={handleNumberSubmit}

@@ -1,7 +1,7 @@
 // TODO: remove from shared
 export const getDisplayedPrice = (options: {
-    priceFrom?: string;
-    priceTo?: string;
+    priceFrom?: string | null;
+    priceTo?: string | null;
 }) => {
     const { priceFrom, priceTo } = options;
 

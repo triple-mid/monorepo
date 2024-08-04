@@ -30,7 +30,12 @@ export const TabNavigation = (props: TabNavigationProps) => {
         <Affix position={{ bottom: 0, left: 0, right: 0 }}>
             <Group
                 styles={{
-                    root: { background: '#FFFFFF', padding: 10 },
+                    root: {
+                        background: '#FFFFFF',
+                        padding: 10,
+                        zIndex: 9999,
+                        position: 'relative',
+                    },
                 }}
                 grow
             >

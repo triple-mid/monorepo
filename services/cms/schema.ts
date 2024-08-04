@@ -228,6 +228,17 @@ export const lists: Lists = {
             dateFrom: calendarDay(),
             dateTo: calendarDay(),
 
+            preferredRegistration: select({
+                validation: { isRequired: true },
+                options: [
+                    { label: 'Оформление по ТК', value: 'official' },
+                    { label: 'Самозанятость', value: 'self-employment' },
+                    { label: 'Оба варианта', value: 'both' },
+                    { label: 'Не ищу работу', value: 'none' },
+                ],
+                defaultValue: 'both',
+            }),
+
             summary: text(),
             content: text(),
             skills: relationship({

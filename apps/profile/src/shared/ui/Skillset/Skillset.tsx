@@ -4,7 +4,7 @@ import { getDisplayedSkills } from './getDisplayedSkills';
 export type SkillsetProps = {
     requireSelfEmployment?: boolean;
     withEmployment?: boolean;
-    skills?: { title: string }[];
+    skills?: null | { title?: string | null | undefined }[];
     max?: number;
 };
 
