@@ -8,6 +8,7 @@ import { useTimeout } from '@mantine/hooks';
 
 import { Carousel, type Embla } from '@mantine/carousel';
 
+import { useGetSkills } from '~/entities/skills/api';
 import { SUPPORTED_CITIES } from '~/shared/configs';
 import { MOCK_WORK_OPTIONS } from '~/shared/mocks';
 import { AuthStepLayout } from './AuthStepLayout';
@@ -15,23 +16,6 @@ import { AuthStepPhoneNumber } from './AuthStepPhoneNumber';
 import { AuthStepPin } from './AuthStepPin';
 
 type ActiveStep = 'phone' | 'pin' | 'profile';
-
-const MOCK_SKILL_TAGS = [
-    'Помощь на объекте',
-    'Кладка плитки',
-    'Инженерное дело',
-    'Установка и выверка деталей и узлов',
-    'Земляные работы',
-    'Свайные работы',
-    'Менеджер',
-    'Управление проектами',
-    'Бетонные работы',
-    'Монолитные работы',
-    'Столярные работы',
-    'Кровельные работы',
-    'Отделочные работы',
-    '+120',
-] as const;
 
 const MOCK_EXPERIENCE = [
     'Без опыта',
@@ -43,6 +27,8 @@ const MOCK_EXPERIENCE = [
 
 // @MOCK_IMPL
 export const AuthForm = () => {
+    const { data: skills, loading: skillsLoading } = useGetSkills();
+
     const router = useRouter();
 
     const [embla, setEmbla] = useState<Embla | null>(null);
@@ -93,15 +79,17 @@ export const AuthForm = () => {
                     <Title order={4}>Какую работу выполняете?</Title>
                     <Text>Выберите минимум 3 варианта</Text>
 
-                    <Chip.Group multiple>
-                        <Group gap={8}>
-                            {MOCK_SKILL_TAGS.map((value) => (
-                                <Chip key={value} value={value} size="md">
-                                    {value}
-                                </Chip>
-                            ))}
-                        </Group>
-                    </Chip.Group>
+                    {skills?.skills && (
+                        <Chip.Group multiple>
+                            <Group gap={8}>
+                                {skills.skills.map(({ title, id }) => (
+                                    <Chip key={id} value={id} size="md">
+                                        {title}
+                                    </Chip>
+                                ))}
+                            </Group>
+                        </Chip.Group>
+                    )}
 
                     <Button
                         color="#2B2A29"

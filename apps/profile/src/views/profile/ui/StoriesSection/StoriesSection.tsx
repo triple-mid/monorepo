@@ -1,4 +1,7 @@
-import { Group, ScrollArea } from '@mantine/core';
+import { Group, ScrollArea, Skeleton } from '@mantine/core';
+
+import { useGetSelf } from '~/entities/profile/api';
+
 import { type StoryItemProps, StoryThumb } from './StoryThumb';
 
 const MOCK: StoryItemProps[] = [
@@ -8,6 +11,8 @@ const MOCK: StoryItemProps[] = [
 ];
 
 export const StoriesSection = () => {
+    const { loading } = useGetSelf();
+
     return (
         <ScrollArea
             style={{ width: '100%', height: 140 }}
@@ -15,9 +20,17 @@ export const StoriesSection = () => {
             type="never"
         >
             <Group gap={12} wrap="nowrap" ml={20}>
-                {MOCK.map((item) => (
-                    <StoryThumb key={item.title} {...item} />
-                ))}
+                {loading ? (
+                    <>
+                        <Skeleton radius={32} w={140} h={140} />
+                        <Skeleton radius={32} w={140} h={140} />
+                        <Skeleton radius={32} w={140} h={140} />
+                    </>
+                ) : (
+                    MOCK.map((item) => (
+                        <StoryThumb key={item.title} {...item} />
+                    ))
+                )}
             </Group>
         </ScrollArea>
     );

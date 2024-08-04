@@ -8,6 +8,7 @@ import {
     PinInput,
     SegmentedControl,
     Select,
+    Skeleton,
     TextInput,
     Textarea,
     createTheme,
@@ -62,6 +63,12 @@ export const DEFAULT_THEME = createTheme({
             },
             styles: {
                 root: { padding: 20 },
+            },
+        }),
+        Skeleton: Paper.extend({
+            defaultProps: {
+                radius: 32,
+                w: '100%',
             },
         }),
     },

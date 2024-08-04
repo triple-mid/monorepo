@@ -14,7 +14,7 @@ export const TimeAndPlace = (props: TimeAndPlaceProps) => {
     const { dateFrom, dateTo, place } = props;
 
     return (
-        <Stack gap={14}>
+        <Stack gap={8}>
             {place && (
                 <Group>
                     <IconStar />

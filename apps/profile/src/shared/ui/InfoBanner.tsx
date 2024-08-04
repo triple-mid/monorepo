@@ -34,7 +34,7 @@ export const InfoBanner = (props: InfoBannerProps) => {
         description,
         buttonContent = 'Продолжить',
         withClose,
-        withNext,
+        withNext = true,
         color = '#1B136F',
         onNextClick,
         onCloseClick,

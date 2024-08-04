@@ -35,8 +35,9 @@ export type JobVacancyProps = SkillsetProps &
     TimeAndPlaceProps &
     Partial<PublicationDateProps> & {
         title: string;
-        cover: string;
+        coverUrl: string;
         summary?: string;
+        content?: string;
 
         organisation?: {
             title: string;
@@ -51,7 +52,7 @@ export type JobVacancyProps = SkillsetProps &
 export const JobVacancy = (props: JobVacancyProps) => {
     const {
         title,
-        cover,
+        coverUrl,
         skills,
         dateTo,
         dateFrom,
@@ -59,6 +60,7 @@ export const JobVacancy = (props: JobVacancyProps) => {
         priceTo,
         organisation,
         summary,
+        content,
         requireSelfEmployment,
         place,
         createdAt,
@@ -70,7 +72,7 @@ export const JobVacancy = (props: JobVacancyProps) => {
     return (
         <div style={{ position: 'relative' }}>
             <BackgroundImage
-                src={cover}
+                src={coverUrl}
                 radius={36}
                 w="100%"
                 h={236}
@@ -92,11 +94,16 @@ export const JobVacancy = (props: JobVacancyProps) => {
                         </Group>
                     )}
 
-                    {title && (
-                        <Title order={2} size="20px">
-                            {title}
-                        </Title>
-                    )}
+                    <Stack gap={6}>
+                        {title && (
+                            <Title order={2} size="20px">
+                                {title}
+                            </Title>
+                        )}
+                        {summary && <Text>{summary}</Text>}
+                    </Stack>
+
+                    {content && <Text>{content}</Text>}
 
                     {organisation && (
                         <Group gap={10}>

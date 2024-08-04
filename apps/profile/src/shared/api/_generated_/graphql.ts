@@ -94,13 +94,12 @@ export type BooleanFilter = {
 
 export type Cv = {
   __typename?: 'CV';
-  content?: Maybe<Cv_Content_Document>;
+  content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   dateFrom?: Maybe<Scalars['CalendarDay']['output']>;
   dateTo?: Maybe<Scalars['CalendarDay']['output']>;
   id: Scalars['ID']['output'];
   place?: Maybe<Scalars['String']['output']>;
-  priceExact?: Maybe<Scalars['String']['output']>;
   priceFrom?: Maybe<Scalars['String']['output']>;
   priceTo?: Maybe<Scalars['String']['output']>;
   skills?: Maybe<Array<Skill>>;
@@ -125,12 +124,11 @@ export type CvSkillsCountArgs = {
 };
 
 export type CvCreateInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
   dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
   place?: InputMaybe<Scalars['String']['input']>;
-  priceExact?: InputMaybe<Scalars['String']['input']>;
   priceFrom?: InputMaybe<Scalars['String']['input']>;
   priceTo?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<SkillRelateToManyForCreateInput>;
@@ -146,12 +144,12 @@ export type CvManyRelationFilter = {
 };
 
 export type CvOrderByInput = {
+  content?: InputMaybe<OrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
   dateFrom?: InputMaybe<OrderDirection>;
   dateTo?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   place?: InputMaybe<OrderDirection>;
-  priceExact?: InputMaybe<OrderDirection>;
   priceFrom?: InputMaybe<OrderDirection>;
   priceTo?: InputMaybe<OrderDirection>;
   summary?: InputMaybe<OrderDirection>;
@@ -176,12 +174,11 @@ export type CvUpdateArgs = {
 };
 
 export type CvUpdateInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
   dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
   place?: InputMaybe<Scalars['String']['input']>;
-  priceExact?: InputMaybe<Scalars['String']['input']>;
   priceFrom?: InputMaybe<Scalars['String']['input']>;
   priceTo?: InputMaybe<Scalars['String']['input']>;
   skills?: InputMaybe<SkillRelateToManyForUpdateInput>;
@@ -194,12 +191,12 @@ export type CvWhereInput = {
   AND?: InputMaybe<Array<CvWhereInput>>;
   NOT?: InputMaybe<Array<CvWhereInput>>;
   OR?: InputMaybe<Array<CvWhereInput>>;
+  content?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   dateFrom?: InputMaybe<CalendarDayNullableFilter>;
   dateTo?: InputMaybe<CalendarDayNullableFilter>;
   id?: InputMaybe<IdFilter>;
   place?: InputMaybe<StringFilter>;
-  priceExact?: InputMaybe<StringFilter>;
   priceFrom?: InputMaybe<StringFilter>;
   priceTo?: InputMaybe<StringFilter>;
   skills?: InputMaybe<SkillManyRelationFilter>;
@@ -210,16 +207,6 @@ export type CvWhereInput = {
 
 export type CvWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type Cv_Content_Document = {
-  __typename?: 'CV_content_Document';
-  document: Scalars['JSON']['output'];
-};
-
-
-export type Cv_Content_DocumentDocumentArgs = {
-  hydrateRelationships?: Scalars['Boolean']['input'];
 };
 
 export type CalendarDayNullableFilter = {
@@ -361,14 +348,15 @@ export type IntNullableFilter = {
 
 export type JobVacancy = {
   __typename?: 'JobVacancy';
-  content?: Maybe<JobVacancy_Content_Document>;
+  content?: Maybe<Scalars['String']['output']>;
+  cover?: Maybe<ImageFieldOutput>;
+  coverUrl?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   dateFrom?: Maybe<Scalars['CalendarDay']['output']>;
   dateTo?: Maybe<Scalars['CalendarDay']['output']>;
   id: Scalars['ID']['output'];
   organisation?: Maybe<Organization>;
   place?: Maybe<Scalars['String']['output']>;
-  priceExact?: Maybe<Scalars['String']['output']>;
   priceFrom?: Maybe<Scalars['String']['output']>;
   priceTo?: Maybe<Scalars['String']['output']>;
   requireSelfEmployment?: Maybe<Scalars['Boolean']['output']>;
@@ -393,13 +381,14 @@ export type JobVacancySkillsCountArgs = {
 };
 
 export type JobVacancyCreateInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  cover?: InputMaybe<ImageFieldInput>;
+  coverUrl?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
   dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
   organisation?: InputMaybe<OrganizationRelateToOneForCreateInput>;
   place?: InputMaybe<Scalars['String']['input']>;
-  priceExact?: InputMaybe<Scalars['String']['input']>;
   priceFrom?: InputMaybe<Scalars['String']['input']>;
   priceTo?: InputMaybe<Scalars['String']['input']>;
   requireSelfEmployment?: InputMaybe<Scalars['Boolean']['input']>;
@@ -415,12 +404,13 @@ export type JobVacancyManyRelationFilter = {
 };
 
 export type JobVacancyOrderByInput = {
+  content?: InputMaybe<OrderDirection>;
+  coverUrl?: InputMaybe<OrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
   dateFrom?: InputMaybe<OrderDirection>;
   dateTo?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   place?: InputMaybe<OrderDirection>;
-  priceExact?: InputMaybe<OrderDirection>;
   priceFrom?: InputMaybe<OrderDirection>;
   priceTo?: InputMaybe<OrderDirection>;
   requireSelfEmployment?: InputMaybe<OrderDirection>;
@@ -446,13 +436,14 @@ export type JobVacancyUpdateArgs = {
 };
 
 export type JobVacancyUpdateInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  cover?: InputMaybe<ImageFieldInput>;
+  coverUrl?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateFrom?: InputMaybe<Scalars['CalendarDay']['input']>;
   dateTo?: InputMaybe<Scalars['CalendarDay']['input']>;
   organisation?: InputMaybe<OrganizationRelateToOneForUpdateInput>;
   place?: InputMaybe<Scalars['String']['input']>;
-  priceExact?: InputMaybe<Scalars['String']['input']>;
   priceFrom?: InputMaybe<Scalars['String']['input']>;
   priceTo?: InputMaybe<Scalars['String']['input']>;
   requireSelfEmployment?: InputMaybe<Scalars['Boolean']['input']>;
@@ -465,13 +456,14 @@ export type JobVacancyWhereInput = {
   AND?: InputMaybe<Array<JobVacancyWhereInput>>;
   NOT?: InputMaybe<Array<JobVacancyWhereInput>>;
   OR?: InputMaybe<Array<JobVacancyWhereInput>>;
+  content?: InputMaybe<StringFilter>;
+  coverUrl?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   dateFrom?: InputMaybe<CalendarDayNullableFilter>;
   dateTo?: InputMaybe<CalendarDayNullableFilter>;
   id?: InputMaybe<IdFilter>;
   organisation?: InputMaybe<OrganizationWhereInput>;
   place?: InputMaybe<StringFilter>;
-  priceExact?: InputMaybe<StringFilter>;
   priceFrom?: InputMaybe<StringFilter>;
   priceTo?: InputMaybe<StringFilter>;
   requireSelfEmployment?: InputMaybe<BooleanFilter>;
@@ -482,16 +474,6 @@ export type JobVacancyWhereInput = {
 
 export type JobVacancyWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type JobVacancy_Content_Document = {
-  __typename?: 'JobVacancy_content_Document';
-  document: Scalars['JSON']['output'];
-};
-
-
-export type JobVacancy_Content_DocumentDocumentArgs = {
-  hydrateRelationships?: Scalars['Boolean']['input'];
 };
 
 export type KeystoneAdminMeta = {
@@ -1069,6 +1051,8 @@ export type Organization = {
   jobVacancies?: Maybe<Array<JobVacancy>>;
   jobVacanciesCount?: Maybe<Scalars['Int']['output']>;
   ogrn?: Maybe<Scalars['String']['output']>;
+  reviewsCount?: Maybe<Scalars['Int']['output']>;
+  starsCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1093,6 +1077,8 @@ export type OrganizationCreateInput = {
   inn?: InputMaybe<Scalars['String']['input']>;
   jobVacancies?: InputMaybe<JobVacancyRelateToManyForCreateInput>;
   ogrn?: InputMaybe<Scalars['String']['input']>;
+  reviewsCount?: InputMaybe<Scalars['Int']['input']>;
+  starsCount?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1103,6 +1089,8 @@ export type OrganizationOrderByInput = {
   id?: InputMaybe<OrderDirection>;
   inn?: InputMaybe<OrderDirection>;
   ogrn?: InputMaybe<OrderDirection>;
+  reviewsCount?: InputMaybe<OrderDirection>;
+  starsCount?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
 };
 
@@ -1129,6 +1117,8 @@ export type OrganizationUpdateInput = {
   inn?: InputMaybe<Scalars['String']['input']>;
   jobVacancies?: InputMaybe<JobVacancyRelateToManyForUpdateInput>;
   ogrn?: InputMaybe<Scalars['String']['input']>;
+  reviewsCount?: InputMaybe<Scalars['Int']['input']>;
+  starsCount?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1143,6 +1133,8 @@ export type OrganizationWhereInput = {
   inn?: InputMaybe<StringFilter>;
   jobVacancies?: InputMaybe<JobVacancyManyRelationFilter>;
   ogrn?: InputMaybe<StringFilter>;
+  reviewsCount?: InputMaybe<IntNullableFilter>;
+  starsCount?: InputMaybe<IntNullableFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -1158,7 +1150,7 @@ export type PasswordState = {
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
-  content?: Maybe<Post_Content_Document>;
+  content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['ID']['output'];
   tags?: Maybe<Array<Tag>>;
@@ -1182,7 +1174,7 @@ export type PostTagsCountArgs = {
 
 export type PostCreateInput = {
   author?: InputMaybe<UserRelateToOneForCreateInput>;
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1195,6 +1187,7 @@ export type PostManyRelationFilter = {
 };
 
 export type PostOrderByInput = {
+  content?: InputMaybe<OrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
@@ -1219,7 +1212,7 @@ export type PostUpdateArgs = {
 
 export type PostUpdateInput = {
   author?: InputMaybe<UserRelateToOneForUpdateInput>;
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1230,6 +1223,7 @@ export type PostWhereInput = {
   NOT?: InputMaybe<Array<PostWhereInput>>;
   OR?: InputMaybe<Array<PostWhereInput>>;
   author?: InputMaybe<UserWhereInput>;
+  content?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<IdFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -1238,16 +1232,6 @@ export type PostWhereInput = {
 
 export type PostWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type Post_Content_Document = {
-  __typename?: 'Post_content_Document';
-  document: Scalars['JSON']['output'];
-};
-
-
-export type Post_Content_DocumentDocumentArgs = {
-  hydrateRelationships?: Scalars['Boolean']['input'];
 };
 
 export type Query = {
@@ -1607,7 +1591,7 @@ export type Story = {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   mediaUrl?: Maybe<Scalars['String']['output']>;
-  thumbUrl?: Maybe<ImageFieldOutput>;
+  thumb?: Maybe<ImageFieldOutput>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1616,7 +1600,7 @@ export type StoryCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
-  thumbUrl?: InputMaybe<ImageFieldInput>;
+  thumb?: InputMaybe<ImageFieldInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1656,7 +1640,7 @@ export type StoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
-  thumbUrl?: InputMaybe<ImageFieldInput>;
+  thumb?: InputMaybe<ImageFieldInput>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1884,6 +1868,7 @@ export type UserProfile = {
   __typename?: 'UserProfile';
   achievements?: Maybe<Array<Achievement>>;
   achievementsCount?: Maybe<Scalars['Int']['output']>;
+  bio?: Maybe<Scalars['String']['output']>;
   birth?: Maybe<Scalars['CalendarDay']['output']>;
   competitionLevel?: Maybe<Scalars['Int']['output']>;
   competitionPoints?: Maybe<Scalars['Int']['output']>;
@@ -1891,7 +1876,7 @@ export type UserProfile = {
   id: Scalars['ID']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
   middleName?: Maybe<Scalars['String']['output']>;
-  photoUrl?: Maybe<ImageFieldOutput>;
+  photo?: Maybe<ImageFieldOutput>;
   reviewsCount?: Maybe<Scalars['Int']['output']>;
   starsCount?: Maybe<Scalars['Int']['output']>;
   user?: Maybe<User>;
@@ -1913,19 +1898,21 @@ export type UserProfileAchievementsCountArgs = {
 
 export type UserProfileCreateInput = {
   achievements?: InputMaybe<AchievementRelateToManyForCreateInput>;
+  bio?: InputMaybe<Scalars['String']['input']>;
   birth?: InputMaybe<Scalars['CalendarDay']['input']>;
   competitionLevel?: InputMaybe<Scalars['Int']['input']>;
   competitionPoints?: InputMaybe<Scalars['Int']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
-  photoUrl?: InputMaybe<ImageFieldInput>;
+  photo?: InputMaybe<ImageFieldInput>;
   reviewsCount?: InputMaybe<Scalars['Int']['input']>;
   starsCount?: InputMaybe<Scalars['Int']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
 
 export type UserProfileOrderByInput = {
+  bio?: InputMaybe<OrderDirection>;
   birth?: InputMaybe<OrderDirection>;
   competitionLevel?: InputMaybe<OrderDirection>;
   competitionPoints?: InputMaybe<OrderDirection>;
@@ -1955,13 +1942,14 @@ export type UserProfileUpdateArgs = {
 
 export type UserProfileUpdateInput = {
   achievements?: InputMaybe<AchievementRelateToManyForUpdateInput>;
+  bio?: InputMaybe<Scalars['String']['input']>;
   birth?: InputMaybe<Scalars['CalendarDay']['input']>;
   competitionLevel?: InputMaybe<Scalars['Int']['input']>;
   competitionPoints?: InputMaybe<Scalars['Int']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
-  photoUrl?: InputMaybe<ImageFieldInput>;
+  photo?: InputMaybe<ImageFieldInput>;
   reviewsCount?: InputMaybe<Scalars['Int']['input']>;
   starsCount?: InputMaybe<Scalars['Int']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
@@ -1972,6 +1960,7 @@ export type UserProfileWhereInput = {
   NOT?: InputMaybe<Array<UserProfileWhereInput>>;
   OR?: InputMaybe<Array<UserProfileWhereInput>>;
   achievements?: InputMaybe<AchievementManyRelationFilter>;
+  bio?: InputMaybe<StringFilter>;
   birth?: InputMaybe<CalendarDayNullableFilter>;
   competitionLevel?: InputMaybe<IntNullableFilter>;
   competitionPoints?: InputMaybe<IntNullableFilter>;
@@ -2042,12 +2031,24 @@ export type UserWhereUniqueInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetJobVacanciesFeedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetJobVacanciesFeedQuery = { __typename?: 'Query', jobVacancies?: Array<{ __typename?: 'JobVacancy', id: string, dateTo?: any | null, dateFrom?: any | null, createdAt?: any | null, coverUrl?: string | null, place?: string | null, priceFrom?: string | null, priceTo?: string | null, title?: string | null, summary?: string | null, content?: string | null, organisation?: { __typename?: 'Organization', address?: string | null, description?: string | null, title?: string | null, starsCount?: number | null, reviewsCount?: number | null, createdAt?: any | null } | null, skills?: Array<{ __typename?: 'Skill', id: string, title?: string | null, description?: string | null }> | null }> | null };
+
 export type GetSelfQueryVariables = Exact<{
   where: UserWhereUniqueInput;
 }>;
 
 
-export type GetSelfQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email?: string | null, username?: string | null, profile?: { __typename?: 'UserProfile', firstName?: string | null, lastName?: string | null, middleName?: string | null } | null } | null };
+export type GetSelfQuery = { __typename?: 'Query', user?: { __typename?: 'User', email?: string | null, username?: string | null, phoneNumber?: string | null, profile?: { __typename?: 'UserProfile', id: string, firstName?: string | null, lastName?: string | null, middleName?: string | null, starsCount?: number | null, reviewsCount?: number | null, birth?: any | null, competitionLevel?: number | null, competitionPoints?: number | null, bio?: string | null, achievements?: Array<{ __typename?: 'Achievement', title?: string | null, description?: string | null }> | null } | null } | null };
+
+export type GetSkillsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const GetSelfDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSelf"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"middleName"}}]}}]}}]}}]} as unknown as DocumentNode<GetSelfQuery, GetSelfQueryVariables>;
+export type GetSkillsQuery = { __typename?: 'Query', skills?: Array<{ __typename?: 'Skill', id: string, title?: string | null, description?: string | null }> | null };
+
+
+export const GetJobVacanciesFeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetJobVacanciesFeed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobVacancies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dateTo"}},{"kind":"Field","name":{"kind":"Name","value":"dateFrom"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"coverUrl"}},{"kind":"Field","name":{"kind":"Name","value":"place"}},{"kind":"Field","name":{"kind":"Name","value":"priceFrom"}},{"kind":"Field","name":{"kind":"Name","value":"priceTo"}},{"kind":"Field","name":{"kind":"Name","value":"organisation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"starsCount"}},{"kind":"Field","name":{"kind":"Name","value":"reviewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"summary"}},{"kind":"Field","name":{"kind":"Name","value":"skills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<GetJobVacanciesFeedQuery, GetJobVacanciesFeedQueryVariables>;
+export const GetSelfDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSelf"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"middleName"}},{"kind":"Field","name":{"kind":"Name","value":"starsCount"}},{"kind":"Field","name":{"kind":"Name","value":"reviewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"birth"}},{"kind":"Field","name":{"kind":"Name","value":"competitionLevel"}},{"kind":"Field","name":{"kind":"Name","value":"competitionPoints"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"achievements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}}]}}]}}]} as unknown as DocumentNode<GetSelfQuery, GetSelfQueryVariables>;
+export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
