@@ -119,7 +119,7 @@ export const AuthForm = () => {
 
                     <Chip.Group multiple={false}>
                         <Group gap={8}>
-                            {MOCK_WORK_OPTIONS.map((value) => (
+                            {MOCK_WORK_OPTIONS.map(({ value }) => (
                                 <Chip key={value} value={value} size="md">
                                     {value}
                                 </Chip>
