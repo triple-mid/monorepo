@@ -9,7 +9,6 @@ datasource sqlite {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "/Users/v.shustov/WebstormProjects/monorepo/node_modules/.myprisma/client"
 }
 
 model User {
@@ -85,6 +84,7 @@ model Organization {
 model JobVacancy {
   id                    String        @id @default(cuid())
   title                 String        @default("")
+  coverUrl              String        @default("")
   cover_id              String?
   cover_filesize        Int?
   cover_width           Int?
@@ -97,7 +97,7 @@ model JobVacancy {
   dateTo                String?
   requireSelfEmployment Boolean       @default(false)
   summary               String        @default("")
-  content               String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  content               String        @default("")
   organisation          Organization? @relation("JobVacancy_organisation", fields: [organisationId], references: [id])
   organisationId        String?       @map("organisation")
   skills                Skill[]       @relation("JobVacancy_skills")
@@ -117,7 +117,7 @@ model CV {
   dateFrom  String?
   dateTo    String?
   summary   String    @default("")
-  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  content   String    @default("")
   skills    Skill[]   @relation("CV_skills")
   createdAt DateTime? @default(now())
 
@@ -135,7 +135,7 @@ model Skill {
 model Post {
   id        String    @id @default(cuid())
   title     String    @default("")
-  content   String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  content   String    @default("")
   author    User?     @relation("Post_author", fields: [authorId], references: [id])
   authorId  String?   @map("author")
   createdAt DateTime? @default(now())
